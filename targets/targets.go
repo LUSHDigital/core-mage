@@ -135,9 +135,7 @@ func Test(ctx context.Context) error {
 	arg = append(arg, "up")
 	arg = append(arg,
 		"--abort-on-container-exit",
-		"--exit-code-from=app",
+		"--exit-code-from app",
 	)
-	arg = append(arg, DockerComposeTestDependencies...)
-	arg = append(arg, "app")
 	return Exec(ComposeBin, arg...)
 }
