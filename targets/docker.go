@@ -79,6 +79,8 @@ func writeDockerComposeDev() error {
 	app := compose.AppService
 	app.Image = DockerBuildImage
 	app.DependsOn = DockerComposeDevDependencies
+	services["app"] = app
+
 	cf := compose.File{
 		Version:  "2",
 		Services: services,
