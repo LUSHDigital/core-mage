@@ -51,6 +51,7 @@ func BuildDockerComposeArgs(name, file string) []string {
 	return []string{
 		"-p", name,
 		"-f", file,
+		"--project-directory", "${PWD}",
 	}
 }
 
