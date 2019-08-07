@@ -133,6 +133,10 @@ func Install(ctx context.Context) error {
 func Test(ctx context.Context) error {
 	arg := BuildDockerComposeArgs(ProjectName, DockerComposeTestFile)
 	arg = append(arg, "up")
+	arg = append(arg,
+		"--abort-on-container-exit",
+		"--exit-code-from=app",
+	)
 	arg = append(arg, DockerComposeTestDependencies...)
 	return Exec(ComposeBin, arg...)
 }
