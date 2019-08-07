@@ -109,7 +109,9 @@ func (Dev) Restart(ctx context.Context) {
 
 // Service starts the go service
 func (Dev) Service(ctx context.Context) error {
-	return Exec(GoBin, "run", "service/main.go")
+	arg := BuildDockerComposeArgs(ProjectName, DockerComposeDevFile)
+	arg = append(arg, "up", "app")
+	return Exec(ComposeBin, arg...)
 }
 
 // Build compiles the project inside a docker container
