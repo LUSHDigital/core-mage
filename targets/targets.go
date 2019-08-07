@@ -107,6 +107,11 @@ func (Dev) Restart(ctx context.Context) {
 	)
 }
 
+// Service starts the go service
+func (Dev) Service(ctx context.Context) error {
+	return Exec(GoBin, "run", "service/main.go")
+}
+
 // Build compiles the project inside a docker container
 func Build(ctx context.Context) error {
 	return Exec(DockerBin, "build", "-q", "--pull", ".")
