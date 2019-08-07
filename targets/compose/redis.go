@@ -23,8 +23,5 @@ var (
 		Logging: map[string]string{
 			"driver": "none",
 		},
-		Volumes: []string{
-			"${PWD}/data/redis/test:/data",
-		},
 	}
 )

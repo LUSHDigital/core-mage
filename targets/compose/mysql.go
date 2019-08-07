@@ -29,9 +29,6 @@ var (
 			"driver": "none",
 		},
 		Restart: "always",
-		Volumes: []string{
-			"${PWD}/data/mysql/test:/var/lib/mysql",
-		},
 		Environment: map[string]string{
 			"MYSQL_DATABASE":      "service",
 			"MYSQL_USER":          "user",

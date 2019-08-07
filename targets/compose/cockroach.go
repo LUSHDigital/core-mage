@@ -26,8 +26,5 @@ var (
 			"driver": "none",
 		},
 		Restart: "always",
-		Volumes: []string{
-			"${PWD}/data/cockroach/test1:/cockroach/cockroach-data",
-		},
 	}
 )

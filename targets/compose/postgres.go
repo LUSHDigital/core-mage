@@ -28,9 +28,6 @@ var (
 			"driver": "none",
 		},
 		Restart: "always",
-		Volumes: []string{
-			"${PWD}/data/postgres/test:/var/lib/postgresql/data",
-		},
 		Environment: map[string]string{
 			"POSTGRES_USER":     "user",
 			"POSTGRES_PASSWORD": "passwd",
