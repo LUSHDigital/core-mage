@@ -4,7 +4,7 @@ var (
 	// AppService represents a docker compose app service.
 	AppService = Service{
 		Image:   "lushdigital/alpine-golang:latest",
-		Command: "go run service/main.go",
+		Command: "go run -mod=vendor service/main.go ",
 		EnvFile: "infra/dev.env",
 		Restart: "no",
 		Volumes: []string{
