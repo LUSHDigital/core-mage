@@ -99,6 +99,14 @@ func (Dev) Stop(ctx context.Context) error {
 	return Exec(ComposeBin, arg...)
 }
 
+// Restart will first stop then start the development environment
+func (Dev) Restart(ctx context.Context) {
+	mg.SerialCtxDeps(ctx,
+		Dev.Stop,
+		Dev.Start,
+	)
+}
+
 // Build compiles the project inside a docker container
 func Build(ctx context.Context) error {
 	return Exec(DockerBin, "build", "-q", "--pull", ".")
