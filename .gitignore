@@ -6,3 +6,4 @@ example/*
 !example/go.mod
 !example/go.sum
 !example/mage.go
+!example/service/*.go
