@@ -7,12 +7,11 @@ var (
 			Context:    "${PWD}",
 			Dockerfile: "${PWD}/Dockerfile",
 		},
-		Command: "go run -mod=vendor service/main.go ",
+		Command: "go run -mod=vendor service/main.go",
 		EnvFile: "infra/dev.env",
 		Restart: "no",
 		Volumes: []string{
 			"$PWD:/service:ro",
-			"$GOMODPATH:/go/pkg/mod:ro",
 		},
 		WorkingDir: "/service",
 	}
@@ -27,7 +26,6 @@ var (
 		Restart: "no",
 		Volumes: []string{
 			"$PWD:/service:ro",
-			"$GOMODPATH:/go/pkg/mod:ro",
 		},
 		WorkingDir: "/service",
 	}
