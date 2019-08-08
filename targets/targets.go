@@ -111,7 +111,7 @@ func (Dev) Restart(ctx context.Context) {
 	)
 }
 
-// Service starts the go service
+// Service starts the go service inside docker compose
 func (Dev) Service(ctx context.Context) error {
 	arg := BuildDockerComposeArgs(ProjectName, ProjectType, DockerComposeDevFile)
 	arg = append(arg, "up", "app")
@@ -123,7 +123,7 @@ func Build(ctx context.Context) error {
 	return Exec(DockerBin, "build", "-q", "--pull", ".")
 }
 
-// Test runs the tests for the project
+// Test runs the project tests inside docker compose
 func Test(ctx context.Context) error {
 	arg := BuildDockerComposeArgs(ProjectName, ProjectType, DockerComposeTestFile)
 	arg = append(arg, "up")
@@ -134,7 +134,7 @@ func Test(ctx context.Context) error {
 	return Exec(ComposeBin, arg...)
 }
 
-// Install runs the tests for the project
+// Install adds the dependencies into your vendor directory
 func Install(ctx context.Context) error {
 	args := []string{
 		"run", "--rm",
@@ -149,7 +149,7 @@ func Install(ctx context.Context) error {
 	)...)
 }
 
-// Upgrade pulls the latest version of the mage targets
+// Upgrade installs the latest version of the mage targets
 func Upgrade(ctx context.Context) error {
 	return Exec(GoBin, "get", "-u", MageTargetsRepo)
 }
