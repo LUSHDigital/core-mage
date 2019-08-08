@@ -3,9 +3,13 @@ package targets
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/magefile/mage/mg"
+)
+
+var (
+	// MageTargetsRepo is the repository used for importing mage targets.
+	MageTargetsRepo = "github.com/LUSHDigital/core-mage"
 )
 
 // Setup is the namespace for actions related to setting up the project.
@@ -121,19 +125,17 @@ func Build(ctx context.Context) error {
 
 // Install runs the tests for the project
 func Install(ctx context.Context) error {
-	wd, err := os.Getwd()
-	if err != nil {
-		return err
-	}
 	args := []string{
 		"run", "--rm",
 		"-e", fmt.Sprintf("GOPROXY=%q", Environment["GOPROXY"]),
-		"-v", fmt.Sprintf("%s:/repo", wd),
+		"-v", "$PWD:/repo",
 		"-v", fmt.Sprintf("%s:/go/pkg/mod", Environment.GoModPath()),
 		"-w", "/repo",
 		DockerBuildImage,
 	}
-	return Exec(DockerBin, append(args, "go", "mod", "vendor")...)
+	return Exec(DockerBin, append(args,
+		"go", "mod", "vendor",
+	)...)
 }
 
 // Test runs the tests for the project
@@ -145,4 +147,20 @@ func Test(ctx context.Context) error {
 		"--exit-code-from app",
 	)
 	return Exec(ComposeBin, arg...)
+}
+
+// Upgrade pulls the latest version of the mage targets
+func Upgrade(ctx context.Context) error {
+	args := []string{
+		"run", "--rm",
+		"-e", fmt.Sprintf("GOPROXY=%q", Environment["GOPROXY"]),
+		"-v", "$PWD:/repo",
+		"-v", fmt.Sprintf("%s:/go/pkg/mod", Environment.GoModPath()),
+		"-w", "/repo",
+		DockerBuildImage,
+	}
+	return Exec(DockerBin, append(args,
+		"go", "get", "-u",
+		MageTargetsRepo,
+	)...)
 }
