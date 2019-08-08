@@ -9,7 +9,7 @@ var (
 		Restart: "no",
 		Volumes: []string{
 			"$PWD:/service:ro",
-			"$GOMODPATH:/go/pkg/mod:ro",
+			"$GOMODPATH:/go/pkg/mod",
 		},
 		WorkingDir: "/service",
 	}
@@ -21,7 +21,7 @@ var (
 		Restart: "no",
 		Volumes: []string{
 			"$PWD:/service:ro",
-			"$GOMODPATH:/go/pkg/mod:ro",
+			"$GOMODPATH:/go/pkg/mod",
 		},
 		WorkingDir: "/service",
 	}
