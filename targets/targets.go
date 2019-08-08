@@ -85,7 +85,7 @@ type Dev mg.Namespace
 
 // Start starts the development environment
 func (Dev) Start(ctx context.Context) error {
-	arg := BuildDockerComposeArgs(ProjectName, DockerComposeDevFile)
+	arg := BuildDockerComposeArgs(ProjectName, ProjectType, DockerComposeDevFile)
 	arg = append(arg, "up", "-d")
 	arg = append(arg, DockerComposeDevDependencies...)
 	return Exec(ComposeBin, arg...)
@@ -93,7 +93,7 @@ func (Dev) Start(ctx context.Context) error {
 
 // Stop stops the development environment
 func (Dev) Stop(ctx context.Context) error {
-	arg := BuildDockerComposeArgs(ProjectName, DockerComposeDevFile)
+	arg := BuildDockerComposeArgs(ProjectName, ProjectType, DockerComposeDevFile)
 	arg = append(arg, "stop")
 	arg = append(arg, DockerComposeDevDependencies...)
 	return Exec(ComposeBin, arg...)
@@ -109,7 +109,7 @@ func (Dev) Restart(ctx context.Context) {
 
 // Service starts the go service
 func (Dev) Service(ctx context.Context) error {
-	arg := BuildDockerComposeArgs(ProjectName, DockerComposeDevFile)
+	arg := BuildDockerComposeArgs(ProjectName, ProjectType, DockerComposeDevFile)
 	arg = append(arg, "up", "app")
 	return Exec(ComposeBin, arg...)
 }
@@ -138,7 +138,7 @@ func Install(ctx context.Context) error {
 
 // Test runs the tests for the project
 func Test(ctx context.Context) error {
-	arg := BuildDockerComposeArgs(ProjectName, DockerComposeTestFile)
+	arg := BuildDockerComposeArgs(ProjectName, ProjectType, DockerComposeTestFile)
 	arg = append(arg, "up")
 	arg = append(arg,
 		"--abort-on-container-exit",

@@ -47,9 +47,9 @@ var (
 )
 
 // BuildDockerComposeArgs will construct arguments for docker compose.
-func BuildDockerComposeArgs(name, file string) []string {
+func BuildDockerComposeArgs(pname, ptype, file string) []string {
 	return []string{
-		"-p", name,
+		"-p", fmt.Sprintf("%s_%s", pname, ptype),
 		"-f", file,
 		"--project-directory", "${PWD}",
 	}
