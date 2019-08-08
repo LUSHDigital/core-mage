@@ -69,14 +69,14 @@ func (Setup) Docker(ctx context.Context) error {
 
 // Git sets up git inside the project
 func (Setup) Git(ctx context.Context) error {
+	if err := Exec(GitBin, "init"); err != nil {
+		return err
+	}
 	return writeGitIgnoreFile()
 }
 
 // Gitlab sets up the gitlab pipeline
 func (Setup) Gitlab(ctx context.Context) error {
-	if err := Exec(GitBin, "init"); err != nil {
-		return err
-	}
 	return writeGitlabCIFile()
 }
 
