@@ -100,6 +100,7 @@ func writeDockerComposeTest() error {
 	}
 
 	app := compose.AppTestService
+	app.Image = DockerBuildImage
 	app.DependsOn = DockerComposeTestDependencies
 	services["app"] = app
 

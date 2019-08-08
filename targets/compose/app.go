@@ -17,10 +17,6 @@ var (
 	}
 	// AppTestService represents a docker compose app service.
 	AppTestService = Service{
-		Build: Build{
-			Context:    "${PWD}",
-			Dockerfile: "${PWD}/Dockerfile",
-		},
 		Command: "go test -mod=vendor -v -cover ./...",
 		EnvFile: "infra/test.env",
 		Restart: "no",
