@@ -151,16 +151,5 @@ func Install(ctx context.Context) error {
 
 // Upgrade pulls the latest version of the mage targets
 func Upgrade(ctx context.Context) error {
-	args := []string{
-		"run", "--rm",
-		"-e", fmt.Sprintf("GOPROXY=%s", Environment.GoProxy()),
-		"-v", "${PWD}:/repo",
-		"-v", fmt.Sprintf("%s:/go/pkg/mod", Environment.GoModPath()),
-		"-w", "/repo",
-		DockerBuildImage,
-	}
-	return Exec(DockerBin, append(args,
-		"go", "get", "-u",
-		MageTargetsRepo,
-	)...)
+	return Exec(GoBin, "get", "-u", MageTargetsRepo)
 }
