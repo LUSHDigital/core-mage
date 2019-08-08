@@ -14,14 +14,26 @@ var (
 	// ProjectName configures the name of the project.
 	ProjectName = "service"
 
-	// Environment describes the environment variables that should be sent with the target.
-	Environment = CMDEnv{
-		"GOPATH":    os.Getenv("GOPATH"),
-		"GOPROXY":   os.Getenv("GOPROXY"),
-		"GOMODPATH": os.Getenv("GOMODPATH"),
-		"PWD":       os.Getenv("PWD"),
-	}
+	// GitBin is the executable name of Git.
+	GitBin = "git"
+
+	// GoBin is the executable name of Go.
+	GoBin = "go"
+
+	// DockerBin is the executable name of Docker.
+	DockerBin = "docker"
+
+	// ComposeBin is the executable name of Docker Compose.
+	ComposeBin = "docker-compose"
 )
+
+// Environment describes the environment variables that should be sent with the target.
+var Environment = CMDEnv{
+	"GOPATH":    os.Getenv("GOPATH"),
+	"GOPROXY":   os.Getenv("GOPROXY"),
+	"GOMODPATH": os.Getenv("GOMODPATH"),
+	"PWD":       os.Getenv("PWD"),
+}
 
 // CMDEnv is used to wrap the command environment with convenience methods.
 type CMDEnv map[string]string
