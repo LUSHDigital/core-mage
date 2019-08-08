@@ -123,21 +123,6 @@ func Build(ctx context.Context) error {
 	return Exec(DockerBin, "build", "-q", "--pull", ".")
 }
 
-// Install runs the tests for the project
-func Install(ctx context.Context) error {
-	args := []string{
-		"run", "--rm",
-		"-e", fmt.Sprintf("GOPROXY=%q", Environment["GOPROXY"]),
-		"-v", "$PWD:/repo",
-		"-v", fmt.Sprintf("%s:/go/pkg/mod", Environment.GoModPath()),
-		"-w", "/repo",
-		DockerBuildImage,
-	}
-	return Exec(DockerBin, append(args,
-		"go", "mod", "vendor",
-	)...)
-}
-
 // Test runs the tests for the project
 func Test(ctx context.Context) error {
 	arg := BuildDockerComposeArgs(ProjectName, ProjectType, DockerComposeTestFile)
@@ -149,11 +134,26 @@ func Test(ctx context.Context) error {
 	return Exec(ComposeBin, arg...)
 }
 
+// Install runs the tests for the project
+func Install(ctx context.Context) error {
+	args := []string{
+		"run", "--rm",
+		"-e", fmt.Sprintf("GOPROXY=%q", Environment.GoProxy()),
+		"-v", "$PWD:/repo",
+		"-v", fmt.Sprintf("%s:/go/pkg/mod", Environment.GoModPath()),
+		"-w", "/repo",
+		DockerBuildImage,
+	}
+	return Exec(DockerBin, append(args,
+		"go", "mod", "vendor",
+	)...)
+}
+
 // Upgrade pulls the latest version of the mage targets
 func Upgrade(ctx context.Context) error {
 	args := []string{
 		"run", "--rm",
-		"-e", fmt.Sprintf("GOPROXY=%q", Environment["GOPROXY"]),
+		"-e", fmt.Sprintf("GOPROXY=%q", Environment.GoProxy()),
 		"-v", "$PWD:/repo",
 		"-v", fmt.Sprintf("%s:/go/pkg/mod", Environment.GoModPath()),
 		"-w", "/repo",

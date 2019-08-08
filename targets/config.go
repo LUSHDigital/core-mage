@@ -5,6 +5,8 @@ import (
 	"path"
 )
 
+const defaultGoProxy = "https://proxy.golang.org"
+
 var (
 	// ProjectType configures type of the project.
 	ProjectType = "service"
@@ -27,14 +29,22 @@ type CMDEnv map[string]string
 // GoModPath derives the go module path from the environment.
 func (e CMDEnv) GoModPath() string {
 	var mod string
-	if p := Environment["GOMODPATH"]; p != "" {
+	if p := e["GOMODPATH"]; p != "" {
 		mod = p
 	}
-	if p := Environment["GOPATH"]; p != "" && mod == "" {
+	if p := e["GOPATH"]; p != "" && mod == "" {
 		mod = path.Join(p, "mod")
 	}
 	if mod == "" {
 		mod = "/go/pkg/mod"
 	}
 	return mod
+}
+
+// GoProxy will return the configured go proxy or provide a default.
+func (e CMDEnv) GoProxy() string {
+	if proxy := e["GOPROXY"]; proxy != "" {
+		return proxy
+	}
+	return defaultGoProxy
 }
