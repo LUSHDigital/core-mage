@@ -77,7 +77,6 @@ func writeDockerComposeDev() error {
 		}
 	}
 	app := compose.AppService
-	app.Image = DockerBuildImage
 	app.DependsOn = DockerComposeDevDependencies
 	services["app"] = app
 
@@ -101,7 +100,6 @@ func writeDockerComposeTest() error {
 	}
 
 	app := compose.AppTestService
-	app.Image = DockerBuildImage
 	app.DependsOn = DockerComposeTestDependencies
 	services["app"] = app
 

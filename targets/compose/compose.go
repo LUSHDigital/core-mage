@@ -6,11 +6,17 @@ type File struct {
 	Services map[string]Service `yaml:"services,omitempty"`
 }
 
+// Build represents the structure of a build directive in a docker compose file.
+type Build struct {
+	Context    string `yaml:"context,omitempty"`
+	Dockerfile string `yaml:"dockerfile,omitempty"`
+}
+
 // Service represents the structure of a docker compose service.
 type Service struct {
 	Image      string `yaml:"image,omitempty"`
 	Command    string `yaml:"command,omitempty"`
-	Build      string `yaml:"build,omitempty"`
+	Build      Build  `yaml:"build,omitempty"`
 	WorkingDir string `yaml:"working_dir,omitempty"`
 	Restart    string `yaml:"restart,omitempty"`
 
