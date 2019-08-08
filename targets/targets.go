@@ -138,7 +138,7 @@ func Test(ctx context.Context) error {
 func Install(ctx context.Context) error {
 	args := []string{
 		"run", "--rm",
-		"-e", fmt.Sprintf("GOPROXY=%q", Environment.GoProxy()),
+		"-e", fmt.Sprintf("GOPROXY=%s", Environment.GoProxy()),
 		"-v", "$PWD:/repo",
 		"-v", fmt.Sprintf("%s:/go/pkg/mod", Environment.GoModPath()),
 		"-w", "/repo",
@@ -153,7 +153,7 @@ func Install(ctx context.Context) error {
 func Upgrade(ctx context.Context) error {
 	args := []string{
 		"run", "--rm",
-		"-e", fmt.Sprintf("GOPROXY=%q", Environment.GoProxy()),
+		"-e", fmt.Sprintf("GOPROXY=%s", Environment.GoProxy()),
 		"-v", "$PWD:/repo",
 		"-v", fmt.Sprintf("%s:/go/pkg/mod", Environment.GoModPath()),
 		"-w", "/repo",
