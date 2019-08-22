@@ -10,6 +10,17 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+// DockerImage represents a reference to a remote docker image
+type DockerImage string
+
+const (
+	// DockerRunImageMigrations specifies the docker image for running a Go service with migrations.
+	DockerRunImageMigrations DockerImage = "lushdigital/alpine-service:migrations"
+
+	// DockerRunImageStandard specifices the docker image for running a Go regular service.
+	DockerRunImageStandard DockerImage = "lushdigital/alpine-service:standard"
+)
+
 const dockerFileTmpl = `FROM %s
 FROM %s
 `
@@ -25,7 +36,7 @@ var (
 	DockerBuildImage = "lushdigital/alpine-golang:latest"
 
 	// DockerRunImage is the image used to run Go projects.
-	DockerRunImage = "lushdigital/alpine-service:latest"
+	DockerRunImage = DockerRunImageStandard
 
 	// DockerComposeTestFile configures the file that should be used for docker compose test environment.
 	DockerComposeTestFile = path.Join(DockerDir, "test.yml")
