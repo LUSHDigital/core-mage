@@ -151,5 +151,8 @@ func Install(ctx context.Context) error {
 
 // Upgrade installs the latest version of the mage targets
 func Upgrade(ctx context.Context) error {
-	return Exec(GoBin, "get", "-u", MageTargetsRepo)
+	if err := Exec(GoBin, "get", "-u", MageTargetsRepo); err != nil {
+		return err
+	}
+	return Exec(GoBin, "mod", "tidy")
 }
