@@ -11,14 +11,17 @@ import (
 )
 
 // DockerImage represents a reference to a remote docker image
-type DockerImage string
+type DockerImage = string
 
 const (
-	// DockerRunImageMigrations specifies the docker image for running a Go service with migrations.
+	// DockerRunImageMigrations specifices the docker image for running a Go service with migrations.
 	DockerRunImageMigrations DockerImage = "lushdigital/alpine-service:migrations"
 
 	// DockerRunImageStandard specifices the docker image for running a Go regular service.
 	DockerRunImageStandard DockerImage = "lushdigital/alpine-service:standard"
+
+	// DockerBuildImageStandard specifices the docker image for building a regular Go service.
+	DockerBuildImageStandard DockerImage = "lushdigital/alpine-golang:latest"
 )
 
 const dockerFileTmpl = `FROM %s
@@ -33,7 +36,7 @@ var (
 	DockerDir = "docker"
 
 	// DockerBuildImage is the image used to build Go projects.
-	DockerBuildImage = "lushdigital/alpine-golang:latest"
+	DockerBuildImage = DockerBuildImageStandard
 
 	// DockerRunImage is the image used to run Go projects.
 	DockerRunImage = DockerRunImageStandard
