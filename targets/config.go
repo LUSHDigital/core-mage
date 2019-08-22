@@ -5,8 +5,6 @@ import (
 	"path"
 )
 
-const defaultGoProxy = "https://proxy.golang.org"
-
 var (
 	// ProjectType configures type of the project.
 	ProjectType = "service"
@@ -55,6 +53,7 @@ func (e CMDEnv) GoModPath() string {
 
 // GoProxy will return the configured go proxy or provide a default.
 func (e CMDEnv) GoProxy() string {
+	const defaultGoProxy = "https://proxy.golang.org"
 	if proxy := e["GOPROXY"]; proxy != "" {
 		return proxy
 	}
