@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path"
+	"strings"
 
 	"github.com/LUSHDigital/core-mage/targets/compose"
 	"gopkg.in/yaml.v2"
@@ -23,13 +24,6 @@ const (
 	// DockerBuildImageStandard specifices the docker image for building a regular Go service.
 	DockerBuildImageStandard DockerImage = "lushdigital/alpine-golang:latest"
 )
-
-const dockerFileTmpl = `FROM %s
-FROM %s
-`
-
-const dockerIgnoreFile = `data/
-`
 
 var (
 	// DockerDir describes the path of the docker directory relative to the project root.
@@ -70,12 +64,16 @@ func BuildDockerComposeArgs(pname, ptype, file string) []string {
 }
 
 func writeDockerfile() error {
+	const dockerFileTmpl = "FROM %s\nFROM %s\n"
 	raw := []byte(fmt.Sprintf(dockerFileTmpl, DockerBuildImage, DockerRunImage))
 	return ioutil.WriteFile("Dockerfile", raw, 0664)
 }
 
 func writeDockerIgnorefile() error {
-	raw := []byte(dockerIgnoreFile)
+	var ignores = []string{
+		"data/",
+	}
+	raw := []byte(strings.Join(ignores, "\n") + "\n")
 	return ioutil.WriteFile(".dockerignore", raw, 0664)
 }
 
