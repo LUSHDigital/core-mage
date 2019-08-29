@@ -41,6 +41,8 @@ var (
 		"cockroach":   CockroachService,
 		"cockroachdb": CockroachService,
 		"redis":       RedisService,
+		"mongo":       MongoService,
+		"mongodb":     MongoService,
 	}
 
 	// TestServices represents all available docker compose services for the testing environment.
@@ -52,5 +54,7 @@ var (
 		"cockroach":   CockroachTestService,
 		"cockroachdb": CockroachTestService,
 		"redis":       RedisTestService,
+		"mongo":       MongoTestService,
+		"mongodb":     MongoTestService,
 	}
 )
