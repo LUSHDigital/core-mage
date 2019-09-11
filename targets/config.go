@@ -23,6 +23,21 @@ var (
 
 	// ComposeBin is the executable name of Docker Compose.
 	ComposeBin = "docker-compose"
+
+	// LocalHost is the IP or hostname of your local machine.
+	LocalHost = "127.0.0.1"
+
+	// MigrationsURLEnvVar is the name of the migrations URL environment variable.
+	MigrationsURLEnvVar = "MIGRATIONS_URL"
+
+	// MigrationsURLLocal is the environment variable for the migrations path in the local environment.
+	MigrationsURLLocal = "file://service/database/migrations"
+
+	// MigrationsURLDev is the environment variable for the migrations path in the development environment.
+	MigrationsURLDev = "file:///migrations"
+
+	// MigrationsURLTest is the environment variable for the migrations path in the test environment.
+	MigrationsURLTest = "file:///service/service/database/migrations"
 )
 
 // Environment describes the environment variables that should be sent with the target.

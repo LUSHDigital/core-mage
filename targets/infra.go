@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/LUSHDigital/core-mage/targets/chart"
+	"github.com/LUSHDigital/core-mage/targets/compose"
 
 	"github.com/joho/godotenv"
 )
@@ -41,19 +42,60 @@ func writeProdChart() error {
 	return writeChart(GCPProdChartFile)
 }
 
-func writeDotEnv(vars map[string]string) error {
+func writeDotEnvFiles() error {
+	if err := writeDotEnv(); err != nil {
+		return err
+	}
+	if err := writeDotEnvLocal(); err != nil {
+		return err
+	}
+	if err := writeDotEnvDev(); err != nil {
+		return err
+	}
+	if err := writeDotEnvTest(); err != nil {
+		return err
+	}
+	return nil
+}
+
+func writeDotEnv() error {
+	var vars = make(map[string]string)
+	for _, dep := range DockerComposeDevDependencies {
+		k, v := compose.Services.EnvFor(LocalHost, dep)
+		vars[k] = v
+	}
+	if DockerRunImage == DockerRunImageMigrations {
+		vars[MigrationsURLEnvVar] = MigrationsURLLocal
+	}
 	return writeEnvFile(path.Join(InfraDir, ".env"), vars)
 }
 
-func writeDotEnvDev(vars map[string]string) error {
+func writeDotEnvDev() error {
+	var vars = make(map[string]string)
+	for _, dep := range DockerComposeDevDependencies {
+		k, v := compose.Services.EnvFor(dep, dep)
+		vars[k] = v
+	}
+	if DockerRunImage == DockerRunImageMigrations {
+		vars[MigrationsURLEnvVar] = MigrationsURLDev
+	}
 	return writeEnvFile(path.Join(InfraDir, "dev.env"), vars)
 }
 
-func writeDotEnvTest(vars map[string]string) error {
+func writeDotEnvTest() error {
+	var vars = make(map[string]string)
+	for _, dep := range DockerComposeTestDependencies {
+		k, v := compose.Services.EnvFor(dep, dep)
+		vars[k] = v
+	}
+	if DockerRunImage == DockerRunImageMigrations {
+		vars[MigrationsURLEnvVar] = MigrationsURLTest
+	}
 	return writeEnvFile(path.Join(InfraDir, "test.env"), vars)
 }
 
-func writeDotEnvLocal(vars map[string]string) error {
+func writeDotEnvLocal() error {
+	var vars = make(map[string]string)
 	return writeEnvFile(path.Join(InfraDir, "local.env"), vars)
 }
 
