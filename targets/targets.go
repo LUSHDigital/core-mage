@@ -123,8 +123,11 @@ func Build(ctx context.Context) error {
 	return Exec(DockerBin, "build", "-q", "--pull", ".")
 }
 
-// Test runs the project tests inside docker compose
-func Test(ctx context.Context) error {
+// Tests is the namespace for actions related to the test environment.
+type Tests mg.Namespace
+
+// All runs the project tests inside docker compose
+func (Tests) All(ctx context.Context) error {
 	arg := BuildDockerComposeArgs(ProjectName, ProjectType, DockerComposeTestFile)
 	arg = append(arg, "up")
 	arg = append(arg,
@@ -132,6 +135,18 @@ func Test(ctx context.Context) error {
 		"--exit-code-from=app",
 	)
 	return Exec(ComposeBin, arg...)
+}
+
+// Reset sets the testing environment to its original state
+func (Tests) Reset(ctx context.Context) error {
+	arg := BuildDockerComposeArgs(ProjectName, ProjectType, DockerComposeTestFile)
+	arg = append(arg, "down")
+	return Exec(ComposeBin, arg...)
+}
+
+// Test runs the project tests inside docker compose
+func Test(ctx context.Context) {
+	mg.CtxDeps(ctx, Tests.All)
 }
 
 // Install adds the dependencies into your vendor directory

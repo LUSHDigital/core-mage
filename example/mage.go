@@ -5,8 +5,6 @@ package main
 import (
 	// mage:import
 	"github.com/LUSHDigital/core-mage/targets"
-	// mage:import test
-	_ "github.com/LUSHDigital/core-mage/targets/tests"
 )
 
 func init() {

@@ -1,14 +1,18 @@
 package tests
 
-import (
-	"context"
+import "fmt"
 
-	"github.com/LUSHDigital/core-mage/targets"
-)
+const deprecated = `DEPRECATED: Remove import of tests package from your Magefile since it's since been baked into the regular targets.
 
-// Reset sets the testing environment to its original state
-func Reset(ctx context.Context) error {
-	arg := targets.BuildDockerComposeArgs(targets.ProjectName, targets.ProjectType, targets.DockerComposeTestFile)
-	arg = append(arg, "down")
-	return targets.Exec(targets.ComposeBin, arg...)
+// mage:import test
+_ "github.com/LUSHDigital/core-mage/targets/tests"
+`
+
+func init() {
+	Deprecated()
+}
+
+// Deprecated prints the deprecation warning from the tests mage targets
+func Deprecated() {
+	fmt.Println(deprecated)
 }
