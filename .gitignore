@@ -5,4 +5,5 @@ tmp/
 example/*
 !example/go.mod
 !example/mage.go
-!example/service/*.go
+!example/service/main.go
+!example/service/main_test.go
