@@ -7,3 +7,4 @@ example/*
 !example/mage.go
 !example/service/main.go
 !example/service/main_test.go
+!example/service/database/**
