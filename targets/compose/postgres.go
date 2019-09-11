@@ -9,7 +9,6 @@ var (
 		},
 		Restart: "always",
 		Ports: []string{
-			"26257:26257",
 			"5432:5432",
 		},
 		Volumes: []string{
@@ -19,6 +18,7 @@ var (
 			"POSTGRES_USER":     "user",
 			"POSTGRES_PASSWORD": "passwd",
 		},
+		urlPattern: "%s:5432/service",
 	}
 
 	// PostgresTestService represents a docker compose postgresql service.
@@ -32,5 +32,6 @@ var (
 			"POSTGRES_USER":     "user",
 			"POSTGRES_PASSWORD": "passwd",
 		},
+		urlPattern: "%s:5432/service",
 	}
 )

@@ -14,6 +14,7 @@ var (
 		Ports: []string{
 			"6379:6379",
 		},
+		urlPattern: "%s:6379/0",
 	}
 
 	// RedisTestService represents a docker compose redis service.
@@ -23,5 +24,6 @@ var (
 		Logging: map[string]string{
 			"driver": "none",
 		},
+		urlPattern: "%s:6379/0",
 	}
 )

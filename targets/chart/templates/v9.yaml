@@ -1,0 +1,175 @@
+---
+{{- if .ChartVersion }}
+chartVersion: "{{.ChartVersion}}"
+{{- end }}
+{{ if .ServiceName }}
+serviceName: "{{.ServiceName}}"
+{{- end }}
+{{- if .ServiceType }}
+serviceType: "{{.ServiceType}}"
+{{- end }}
+{{- if .ServiceScope }}
+serviceScope: "{{.ServiceScope}}"
+{{- end }}
+{{- if .ServiceVersion }}
+serviceVersion: "{{.ServiceVersion}}"
+{{- end }}
+{{- if .ServiceImage }}
+serviceImage: "{{.ServiceImage}}"
+{{- end }}
+{{- if .ServiceImageTag }}
+serviceImageTag: "{{.ServiceImageTag}}"
+{{- end }}
+{{- if .ServiceLocation }}
+serviceLocation: "{{.ServiceLocation}}"
+{{- end }}
+{{- if .ServiceNamespace }}
+serviceNamespace: "{{.ServiceNamespace}}"
+{{- end }}
+{{- if .ServiceBranch }}
+serviceBranch: "{{.ServiceBranch}}"
+{{- end }}
+{{- if .ServiceEnvironment }}
+serviceEnvironment: "{{.ServiceEnvironment}}"
+{{- end }}
+{{- if .ClusterEnvironment }}
+clusterEnvironment: "{{.ClusterEnvironment}}"
+{{- end }}
+{{- if .CIEnvironmentSlug }}
+ciEnvironmentSlug: "{{.CIEnvironmentSlug}}"
+{{- end }}
+{{- if .CIPipelineID }}
+ciPipelineId: "{{.CIPipelineID}}"
+{{- end }}
+{{- if .CIBuildID }}
+ciBuildId: "{{.CIBuildID}}"
+{{- end }}
+{{- if .CIEnvironmentHostname }}
+ciEnvironmentHostname: "{{.CIEnvironmentHostname}}"
+{{- end }}
+{{ if .PrivateRegistryKey }}
+privateRegistryKey: "{{.PrivateRegistryKey}}"
+{{- end }}
+{{- if .ProjectID }}
+projectId: "{{.ProjectID}}"
+{{- end }}
+{{- if .PullPolicy }}
+pullPolicy: "{{.PullPolicy}}"
+{{- end }}
+{{- if .ProjectZone }}
+projectZone: "{{.ProjectZone}}"
+{{- end }}
+{{- if .TLSKey }}
+tlsKey: "{{.TLSKey}}"
+{{- end }}
+{{- if .TLSCert }}
+tlsCert: "{{.TLSCert}}"
+{{- end }}
+{{- if .JWTPublicURL }}
+jwtPublicURL: "{{.JWTPublicURL}}"
+{{- end }}
+{{ if .DevelopmentVolumeMapping }}
+developmentVolumeMapping: {{.DevelopmentVolumeMapping}}
+{{- end }}
+{{- if .ServiceIngress }}
+serviceIngress: {{.ServiceIngress}}
+{{- end }}
+{{- if .ServiceGrpcIngress }}
+serviceGrpcIngress: {{.ServiceGrpcIngress}}
+{{- end }}
+{{- if .Replicas }}
+replicas: {{.Replicas}}
+{{- end }}
+{{- if .SetupJob }}
+setupJob: {{.SetupJob}}
+{{- end }}
+{{- if .SetupJobTimeout }}
+setupJobTimeout: {{.SetupJobTimeout}}
+{{- end }}
+{{ if .EnvVars }}
+envVars:
+{{- range $k, $v := .EnvVars }}
+  {{$k}}: {{$v}}
+{{- end }}
+{{- end }}
+{{ if .SecretEnvVars }}
+secretEnvVars:
+{{- range $k, $var := .SecretEnvVars }}
+  {{$k}}:
+    name: {{$var.Name}}
+    secretName: {{$var.SecretName}}
+    key: {{$var.Key}}
+{{- end }}
+{{- end }}
+{{ if or .MemoryStore .LocalRedis}}
+# Some services may use GCP Memory Store instead of local redis
+# Either localRedis should be 1 or this should be set
+# If localRedis is 1 and memoryStore is set, memoryStore will take precedence
+{{- end }}
+{{- if .MemoryStore }}
+memoryStore: "{{.MemoryStore}}"
+{{- end }}
+{{- if .LocalRedis }}
+localRedis: {{.LocalRedis}}
+{{- end }}
+{{ if .ExtraJobs }}
+# Scheduled cronjobs to execute with a custom image and command
+# Name must be DNS-1123 compatible
+# The schedule is cron compatible schedule syntax
+# Set enableDB if you'd like to pass in the database environment variables
+# Restart policy is either "Always, OnFailure or Never". Set what's appropriate
+# for the job
+extraJobs:
+{{- range $k, $job := .ExtraJobs }}
+  - name: {{$job.Name}}
+{{- if $job.Command }}
+    command:
+{{- range $segment := $job.Command }}
+      - "{{$segment}}"
+{{- end }}
+{{- end }}
+{{- if .EnvVars }}
+    envVars:
+{{- range $k, $v := .EnvVars }}
+      {{$k}}: {{$v}}
+{{- end }}
+{{- end }}
+{{- if $job.Schedule }}
+    schedule: "{{$job.Schedule}}"
+{{- end }}
+{{- if $job.Image }}
+    image:
+{{- if $job.Image.Repository }}
+      repository: {{$job.Image.Repository}}
+{{- end }}
+{{- if $job.Image.Tag }}
+      tag: "{{$job.Image.Tag}}"
+{{- end }}
+{{- end }}
+{{- if $job.Schedule }}
+    enableDB: {{$job.EnableDB}}
+{{- end }}
+{{- if $job.Schedule }}
+    restartPolicy: "{{$job.RestartPolicy}}"
+{{- end }}
+{{- end }}
+{{- end }}
+{{ if .CockroachDB }}
+# These are the public certificates used to talk to our different
+# clusters. The key is selected by the serviceEnvironment value
+cockroachdb:
+{{- if .CockroachDB.Enable }}
+  enable: {{.CockroachDB.Enable}}
+{{- end }}
+{{- if .CockroachDB.Certificates }}
+  certificates:
+{{- if .CockroachDB.Certificates.Production }}
+    production: |
+{{ .CockroachDB.Certificates.Production | indent 5 -}}
+{{- end }}
+{{- if .CockroachDB.Certificates.Staging }}
+    staging: |
+{{ .CockroachDB.Certificates.Staging | indent 5 -}}
+{{- end }}
+{{- end }}
+{{- end }}

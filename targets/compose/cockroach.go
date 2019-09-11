@@ -16,6 +16,7 @@ var (
 		Volumes: []string{
 			"${PWD}/data/cockroach/dev1:/cockroach/cockroach-data",
 		},
+		urlPattern: "root@%s:26257/defaultdb?sslmode=disable",
 	}
 
 	// CockroachTestService represents a docker compose cockroach db service.
@@ -25,6 +26,7 @@ var (
 		Logging: map[string]string{
 			"driver": "none",
 		},
-		Restart: "always",
+		Restart:    "always",
+		urlPattern: "root@%s:26257/defaultdb?sslmode=disable",
 	}
 )

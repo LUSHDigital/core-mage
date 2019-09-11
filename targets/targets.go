@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/LUSHDigital/core-mage/targets/compose"
 	"github.com/magefile/mage/mg"
 )
 
@@ -36,16 +37,32 @@ func (Setup) Infra(ctx context.Context) error {
 	if err := writeProdChart(); err != nil {
 		return err
 	}
-	if err := writeDotEnv(); err != nil {
+	var vars = make(map[string]string)
+	for _, dep := range DockerComposeDevDependencies {
+		k, v := compose.Services.EnvFor("127.0.0.1", dep)
+		vars[k] = v
+	}
+	if err := writeDotEnv(vars); err != nil {
 		return err
 	}
-	if err := writeDotEnvDev(); err != nil {
+	vars = make(map[string]string)
+	if err := writeDotEnvLocal(vars); err != nil {
 		return err
 	}
-	if err := writeDotEnvTest(); err != nil {
+	vars = make(map[string]string)
+	for _, dep := range DockerComposeDevDependencies {
+		k, v := compose.Services.EnvFor(dep, dep)
+		vars[k] = v
+	}
+	if err := writeDotEnvDev(vars); err != nil {
 		return err
 	}
-	if err := writeDotEnvLocal(); err != nil {
+	vars = make(map[string]string)
+	for _, dep := range DockerComposeTestDependencies {
+		k, v := compose.Services.EnvFor(dep, dep)
+		vars[k] = v
+	}
+	if err := writeDotEnvTest(vars); err != nil {
 		return err
 	}
 	return nil

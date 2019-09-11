@@ -20,6 +20,7 @@ var (
 			"MYSQL_PASSWORD":      "passwd",
 			"MYSQL_ROOT_PASSWORD": "passwd",
 		},
+		urlPattern: "tcp(%s:3306)/service",
 	}
 
 	// MySQLTestService represents a docker compose mysql service for the test environment.
@@ -35,5 +36,6 @@ var (
 			"MYSQL_PASSWORD":      "passwd",
 			"MYSQL_ROOT_PASSWORD": "passwd",
 		},
+		urlPattern: "tcp(%s:3306)/service",
 	}
 )

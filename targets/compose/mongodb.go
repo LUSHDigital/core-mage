@@ -26,6 +26,7 @@ var (
 			"MONGO_INITDB_ROOT_USERNAME": "user",
 			"MONGO_INITDB_ROOT_PASSWORD": "passwd",
 		},
+		urlPattern: "%s:27017",
 	}
 
 	// MongoTestService represents a docker compose mongodb service.
@@ -35,5 +36,6 @@ var (
 		Logging: map[string]string{
 			"driver": "none",
 		},
+		urlPattern: "%s:27017",
 	}
 )
