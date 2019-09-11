@@ -55,9 +55,9 @@ var (
 )
 
 // BuildDockerComposeArgs will construct arguments for docker compose.
-func BuildDockerComposeArgs(pname, ptype, file string) []string {
+func BuildDockerComposeArgs(pname, ptype, namespace, file string) []string {
 	return []string{
-		"-p", fmt.Sprintf("%s_%s", pname, ptype),
+		"-p", fmt.Sprintf("%s_%s_%s", pname, ptype, namespace),
 		"-f", file,
 		"--project-directory", "${PWD}",
 	}
@@ -89,6 +89,7 @@ func writeDockerComposeDev() error {
 		}
 	}
 	app := compose.AppService
+	app.Image = DockerBuildImageStandard
 	app.DependsOn = DockerComposeDevDependencies
 	services["app"] = app
 

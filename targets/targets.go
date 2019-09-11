@@ -80,7 +80,7 @@ type Dev mg.Namespace
 
 // Start starts the development environment
 func (Dev) Start(ctx context.Context) error {
-	arg := BuildDockerComposeArgs(ProjectName, ProjectType, DockerComposeDevFile)
+	arg := BuildDockerComposeArgs(ProjectName, ProjectType, "dev", DockerComposeDevFile)
 	arg = append(arg, "up", "-d")
 	arg = append(arg, DockerComposeDevDependencies...)
 	return Exec(ComposeBin, arg...)
@@ -88,7 +88,7 @@ func (Dev) Start(ctx context.Context) error {
 
 // Stop stops the development environment
 func (Dev) Stop(ctx context.Context) error {
-	arg := BuildDockerComposeArgs(ProjectName, ProjectType, DockerComposeDevFile)
+	arg := BuildDockerComposeArgs(ProjectName, ProjectType, "dev", DockerComposeDevFile)
 	arg = append(arg, "stop")
 	arg = append(arg, DockerComposeDevDependencies...)
 	return Exec(ComposeBin, arg...)
@@ -104,7 +104,7 @@ func (Dev) Restart(ctx context.Context) {
 
 // Service starts the go service inside docker compose
 func (Dev) Service(ctx context.Context) error {
-	arg := BuildDockerComposeArgs(ProjectName, ProjectType, DockerComposeDevFile)
+	arg := BuildDockerComposeArgs(ProjectName, ProjectType, "dev", DockerComposeDevFile)
 	arg = append(arg, "up", "app")
 	return Exec(ComposeBin, arg...)
 }
@@ -119,7 +119,7 @@ type Tests mg.Namespace
 
 // All runs the project tests inside docker compose
 func (Tests) All(ctx context.Context) error {
-	arg := BuildDockerComposeArgs(ProjectName, ProjectType, DockerComposeTestFile)
+	arg := BuildDockerComposeArgs(ProjectName, ProjectType, "test", DockerComposeTestFile)
 	arg = append(arg, "up")
 	arg = append(arg,
 		"--abort-on-container-exit",
@@ -130,7 +130,7 @@ func (Tests) All(ctx context.Context) error {
 
 // Reset sets the testing environment to its original state
 func (Tests) Reset(ctx context.Context) error {
-	arg := BuildDockerComposeArgs(ProjectName, ProjectType, DockerComposeTestFile)
+	arg := BuildDockerComposeArgs(ProjectName, ProjectType, "test", DockerComposeTestFile)
 	arg = append(arg, "down")
 	return Exec(ComposeBin, arg...)
 }
