@@ -1,12 +1,16 @@
 package main
 
-import "time"
+import (
+	"log"
+	"time"
+)
 
 func main() {
-	f := func() {
-		time.Sleep(5 * time.Second)
-	}
-	for {
-		f()
-	}
+	log.Println("Started service... sleeping every 5 seconds")
+	go func() {
+		for {
+			time.Sleep(5 * time.Second)
+		}
+	}()
+	select {}
 }
