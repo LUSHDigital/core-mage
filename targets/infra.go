@@ -8,9 +8,9 @@ import (
 	"path"
 	"strings"
 
-	"github.com/joho/godotenv"
-
 	"github.com/LUSHDigital/core-mage/targets/chart"
+
+	"github.com/joho/godotenv"
 )
 
 var (
