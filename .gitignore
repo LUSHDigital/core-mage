@@ -3,7 +3,6 @@ infra/
 build/
 tmp/
 example/*
-go.sum
 !example/go.mod
 !example/mage.go
 !example/service/main.go
