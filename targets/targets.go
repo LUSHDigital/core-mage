@@ -64,7 +64,7 @@ func (Setup) Docker(ctx context.Context) error {
 
 // Git sets up git inside the project
 func (Setup) Git(ctx context.Context) error {
-	if err := Exec(GitBin, "init"); err != nil {
+	if err := initGit(); err != nil {
 		return err
 	}
 	return writeGitIgnoreFile()
@@ -133,6 +133,41 @@ func (Tests) Reset(ctx context.Context) error {
 	arg := BuildDockerComposeArgs(ProjectName, ProjectType, "test", DockerComposeTestFile)
 	arg = append(arg, "down")
 	return Exec(ComposeBin, arg...)
+}
+
+// Protos is the namespace for actions related to generating protobuffers.
+type Protos mg.Namespace
+
+// Add the protos submodule to the repository
+func (Protos) Add(ctx context.Context) error {
+	if err := addProtosSubmodule(); err != nil {
+		return err
+	}
+	return nil
+}
+
+// Remove the protos submodule from the repository
+func (Protos) Remove(ctx context.Context) error {
+	if err := removeProtosSubmodule(); err != nil {
+		return err
+	}
+	return nil
+}
+
+// Update the protos submodule
+func (Protos) Update(ctx context.Context) error {
+	if err := updateProtosSubmodule(); err != nil {
+		return err
+	}
+	return nil
+}
+
+// Generate the protobuffers for this project
+func (Protos) Generate(ctx context.Context) error {
+	if err := genProtos(); err != nil {
+		return err
+	}
+	return nil
 }
 
 // Test runs the project tests inside docker compose
