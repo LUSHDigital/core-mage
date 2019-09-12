@@ -84,3 +84,8 @@ We've provided simple tooling for having mage be self-upgrading. Run the target 
 ```bash
 $ mage upgrade
 ```
+
+## Contributing
+If you're thinking about contributing to this repository, first of all, thank you! Second of all is to tell you to clone the repository outside of your `GOPATH` since this is a module based project. Once you're set-up, you can make the changes you want and try your targets in the `example/` directory, which is set up to point at your local targets package.
+
+**Happy wizardry!**
