@@ -13,4 +13,5 @@ func init() {
 	targets.DockerComposeDevDependencies = []string{"redis", "cockroach"}
 	targets.DockerComposeTestDependencies = []string{"cockroach"}
 	targets.DockerRunImage = targets.DockerRunImageMigrations
+	targets.ProtoServices = []string{"products"}
 }
