@@ -40,6 +40,17 @@ To setup a project using mage, you can simply run the setup command in the root 
 $ mage setup:all
 ```
 
+#### Reference: infra
+Once the setup has completed, you will notice under the `infra/` folder that some files have been created. Here is a quick reference:
+
+- `local.env` defines environment variables when running your application with `go run` or `go build`
+- `dev.env` defines environment variables when running your application with `mage dev:service`
+- `test.env` defines environment variables when running your application with `mage test`
+- `staging.gcp.yml` defines environment variables & configuration options when running your application within the `staging` cluster
+- `prod.gcp.yml` defines environment variables & configuration options when running your application within the `production` cluster
+
+Note that `dev.env` and `test.env` are useful to avoid having to fiddle with docker-compose definitions.
+
 ### Test
 Every project should have tests, yours is no exception. These mage targets make it easy to both run and manage your test environment. To run your tests, simply run the target and let mage to the rest.
 
