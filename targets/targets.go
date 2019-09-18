@@ -170,6 +170,72 @@ func (Protos) Generate(ctx context.Context) error {
 	return nil
 }
 
+// Mod is the namespace for actions related to installing modules.
+type Mod mg.Namespace
+
+// Core installs or upgrades all core packages
+func (Mod) Core() error {
+	libs := []string{
+		"github.com/LUSHDigital/core",
+		"github.com/LUSHDigital/spew",
+	}
+	return goget(libs...)
+}
+
+// Uuid installs or upgrades the uuid package
+func (Mod) Uuid() error {
+	libs := []string{
+		"github.com/LUSHDigital/core",
+		"github.com/LUSHDigital/spew",
+	}
+	return goget(libs...)
+}
+
+// Mysql installs or upgrades the mysql packages
+func (Mod) Mysql() error {
+	libs := []string{
+		"github.com/LUSHDigital/core-sql",
+		"github.com/LUSHDigital/scan",
+		"github.com/go-sql-driver/mysql",
+	}
+	return goget(libs...)
+}
+
+// Postgres installs or upgrades the postgres packages
+func (Mod) Postgres() error {
+	libs := []string{
+		"github.com/LUSHDigital/core-sql",
+		"github.com/LUSHDigital/scan",
+		"github.com/lib/pq",
+	}
+	return goget(libs...)
+}
+
+// Cockroach installs or upgrades the cockroach packages
+func (Mod) Cockroach() error {
+	libs := []string{
+		"github.com/LUSHDigital/core-sql",
+		"github.com/LUSHDigital/scan",
+		"github.com/lib/pq",
+	}
+	return goget(libs...)
+}
+
+// Redis installs or upgrades the redis packages
+func (Mod) Redis() error {
+	libs := []string{
+		"github.com/LUSHDigital/core-redis",
+		"github.com/go-redis/redis",
+		"github.com/alicebob/miniredis",
+		"github.com/elliotchance/redismock",
+	}
+	return goget(libs...)
+}
+
+func goget(libs ...string) error {
+	return Exec(GoBin, append([]string{"get", "-u"}, libs...)...)
+}
+
 // Test runs the project tests inside docker compose
 func Test(ctx context.Context) {
 	mg.CtxDeps(ctx, Tests.All)
