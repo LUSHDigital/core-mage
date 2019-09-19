@@ -89,7 +89,7 @@ setupJobTimeout: {{.SetupJobTimeout}}
 {{ if .EnvVars }}
 envVars:
 {{- range $k, $v := .EnvVars }}
-  {{$k}}: {{$v}}
+  {{$k}}: {{$v | raw}}
 {{- end }}
 {{- end }}
 {{ if .SecretEnvVars }}
@@ -131,7 +131,7 @@ extraJobs:
 {{- if .EnvVars }}
     envVars:
 {{- range $k, $v := .EnvVars }}
-      {{$k}}: {{$v}}
+      {{$k}}: {{$v | raw}}
 {{- end }}
 {{- end }}
 {{- if $job.Schedule }}

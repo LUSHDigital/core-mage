@@ -59,7 +59,15 @@ func (f V9File) WriteTo(out io.Writer) (int64, error) {
 	if err != nil {
 		return 0, err
 	}
-	t := template.Must(template.New("v9.yaml").Funcs(sprig.FuncMap()).Parse(raw))
+	funcs := map[string]interface{}{
+		"raw": func(s string) template.HTML {
+			return template.HTML(s)
+		},
+	}
+	t := template.Must(template.New("v9.yaml").
+		Funcs(sprig.FuncMap()).
+		Funcs(funcs).
+		Parse(raw))
 	if err := t.ExecuteTemplate(out, "v9.yaml", &f); err != nil {
 		return 0, err
 	}
