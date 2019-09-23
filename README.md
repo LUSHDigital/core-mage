@@ -51,6 +51,31 @@ Once the setup has completed, you will notice under the `infra/` folder that som
 
 Note that `dev.env` and `test.env` are useful to avoid having to fiddle with docker-compose definitions.
 
+#### Reference: protos
+
+Note that the following configuration options are available when dealing with the `mage protos` namespace.
+
+```
+// ProtoDefinitionsRepo is the central repository used for proto definitions.
+ProtoDefinitionsRepo = "git@gitlab.com:LUSHDigital/soa/models/rpc.git"
+
+// ProtoDefinitionsBranch is the branch of the protos repository to check out.
+ProtoDefinitionsBranch = "master"
+
+// ProtoOutputPath is the path where the generated protos should be output to.
+ProtoOutputPath = "service"
+
+// ProtoServices are the service protobuffers that should be generated with lush-protogen.
+ProtoServices = []string{}
+
+// ProtoAggregators are the aggregator protobuffers that should be generated with lush-protogen.
+ProtoAggregators = []string{}
+```
+
+`ProtoDefinitionsBranch` can be used to point to a development branch, rather than the default (master).
+This allows working with volatile definitions which aren't ready for general use.
+
+
 ### Test
 Every project should have tests, yours is no exception. These mage targets make it easy to both run and manage your test environment. To run your tests, simply run the target and let mage to the rest.
 
