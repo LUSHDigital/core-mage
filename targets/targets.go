@@ -176,6 +176,7 @@ type Mod mg.Namespace
 // Core installs or upgrades all core packages
 func (Mod) Core() error {
 	libs := []string{
+		"github.com/LUSHDigital/core-lush",
 		"github.com/LUSHDigital/core",
 		"github.com/LUSHDigital/spew",
 	}
