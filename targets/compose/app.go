@@ -4,7 +4,7 @@ var (
 	// AppService represents a docker compose app service.
 	AppService = Service{
 		Command: "go run -mod=vendor service/main.go",
-		EnvFile: "infra/dev.env",
+		EnvFile: "infra/compose.dev.env",
 		Restart: "no",
 		Volumes: []string{
 			"$PWD:/service:ro",
@@ -14,7 +14,7 @@ var (
 	// AppTestService represents a docker compose app service.
 	AppTestService = Service{
 		Command: "go test -mod=vendor -v -cover ./...",
-		EnvFile: "infra/test.env",
+		EnvFile: "infra/compose.test.env",
 		Restart: "no",
 		Volumes: []string{
 			"$PWD:/service:ro",
