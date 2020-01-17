@@ -128,10 +128,18 @@ func (Tests) Run(ctx context.Context) error {
 	return Exec(ComposeBin, arg...)
 }
 
-// Reset sets the testing environment to its original state
+// Reset returns the testing environment to its orginal state
 func (Tests) Reset(ctx context.Context) error {
 	arg := BuildDockerComposeArgs(ProjectName, ProjectType, "test", DockerComposeTestFile)
 	arg = append(arg, "down")
+	return Exec(ComposeBin, arg...)
+}
+
+// Prepare initialises the test environment dependencies
+func (Tests) Prepare(ctx context.Context) error {
+	arg := BuildDockerComposeArgs(ProjectName, ProjectType, "test", DockerComposeTestFile)
+	arg = append(arg, "up", "-d")
+	arg = append(arg, DockerComposeTestDependencies...)
 	return Exec(ComposeBin, arg...)
 }
 
