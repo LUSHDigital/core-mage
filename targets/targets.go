@@ -233,10 +233,6 @@ func (Mod) Redis() error {
 	return goget(libs...)
 }
 
-func goget(libs ...string) error {
-	return Exec(GoBin, append([]string{"get", "-u"}, libs...)...)
-}
-
 // Test runs the project tests inside docker compose
 func Test(ctx context.Context) {
 	mg.CtxDeps(ctx, Tests.All)
