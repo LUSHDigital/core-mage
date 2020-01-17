@@ -19,11 +19,11 @@ env.TryLoadDev("package/other.env")
 ### Loading test environment config
 
 ```go
-env.TryLoadTesst()
+env.TryLoadTest()
 ```
 
 ### Loading test environment config together with other source
 
 ```go
-env.TryLoadTesst("package/other.env")
+env.TryLoadTest("package/other.env")
 ```
