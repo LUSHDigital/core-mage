@@ -26,7 +26,11 @@ var (
 		Logging: map[string]string{
 			"driver": "none",
 		},
-		Restart:    "always",
-		urlPattern: "root@%s:26257/defaultdb?sslmode=disable",
+		Restart: "always",
+		Ports: []string{
+			"26258:26257",
+			"8181:8080",
+		},
+		urlPattern: "root@%s:26258/defaultdb?sslmode=disable",
 	}
 )

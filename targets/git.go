@@ -9,6 +9,7 @@ import (
 )
 
 const gitIgnoreFile = `infra/local.env
+infra/personal.env
 vendor/
 build/
 data/

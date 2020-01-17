@@ -30,12 +30,15 @@ var (
 			"driver": "none",
 		},
 		Restart: "always",
+		Ports: []string{
+			"3307:3306",
+		},
 		Environment: map[string]string{
 			"MYSQL_DATABASE":      "service",
 			"MYSQL_USER":          "user",
 			"MYSQL_PASSWORD":      "passwd",
 			"MYSQL_ROOT_PASSWORD": "passwd",
 		},
-		urlPattern: "tcp(%s:3306)/service",
+		urlPattern: "tcp(%s:3307)/service",
 	}
 )
