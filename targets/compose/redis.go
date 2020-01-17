@@ -24,6 +24,9 @@ var (
 		Logging: map[string]string{
 			"driver": "none",
 		},
-		urlPattern: "%s:6379/0",
+		Ports: []string{
+			"6380:6379",
+		},
+		urlPattern: "%s:6380/0",
 	}
 )

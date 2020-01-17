@@ -36,6 +36,11 @@ var (
 		Logging: map[string]string{
 			"driver": "none",
 		},
-		urlPattern: "%s:27017",
+		Ports: []string{
+			"27020:27017",
+			"27021:27018",
+			"27022:27019",
+		},
+		urlPattern: "%s:27020",
 	}
 )

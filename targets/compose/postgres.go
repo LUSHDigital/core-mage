@@ -28,10 +28,13 @@ var (
 			"driver": "none",
 		},
 		Restart: "always",
+		Ports: []string{
+			"5433:5432",
+		},
 		Environment: map[string]string{
 			"POSTGRES_USER":     "user",
 			"POSTGRES_PASSWORD": "passwd",
 		},
-		urlPattern: "%s:5432/service",
+		urlPattern: "%s:5433/service",
 	}
 )
