@@ -43,13 +43,14 @@ $ mage setup:all
 #### Reference: infra
 Once the setup has completed, you will notice under the `infra/` folder that some files have been created. Here is a quick reference:
 
-- `local.env` defines environment variables when running your application with `go run` or `go build`
-- `dev.env` defines environment variables when running your application with `mage dev:service`
-- `test.env` defines environment variables when running your application with `mage test`
-- `staging.gcp.yml` defines environment variables & configuration options when running your application within the `staging` cluster
-- `prod.gcp.yml` defines environment variables & configuration options when running your application within the `production` cluster
+- `common.env` contain variables for the development and environments both locally and in docker compose
+- `personal.env` personal contain variables for the development and environments both locally and in docker compose and is ignored by git by default
+- `compose.dev.env` contain variables for the development environment within docker compose when running `mage dev:service`
+- `compose.test.env` contain variables for the test environment within docker compose when running `mage test`
+- `staging.gcp.yml` contain variables & configuration options when running your application within the `staging` cluster
+- `prod.gcp.yml` contain variables & configuration options when running your application within the `production` cluster
 
-Note that `dev.env` and `test.env` are useful to avoid having to fiddle with docker-compose definitions.
+Note that `compose.dev.env` and `compose.test.env` are useful to avoid having to fiddle with the docker compose definitions.
 
 ### Test
 Every project should have tests, yours is no exception. These mage targets make it easy to both run and manage your test environment. To run your tests, simply run the target and let mage to the rest.
@@ -65,6 +66,20 @@ func init() {
     ...
     targets.DockerComposeTestDependencies = []string{"mysql"}
 }
+```
+
+### Running tests on your local machine
+Sometimes you want to be able to run partial tests, add test flags or have your IDE run the tests for you. To achieve this you can start your test dependencies by running the `tests:prepare` target. This will keep them running in the background and expose their ports to the host machine.
+
+```
+$ mage tests:prepare
+```
+
+### Resetting your test environment to its original state
+If your tests have gotten your database in a broken state and you don't know why, you can always reset the entire test environment using the `tests:reset` target to bring it down. Remember you need to run `tests:prepare` again if you want to run your tests on the host machine.
+
+```
+$ mage tests:reset
 ```
 
 ### Develop
