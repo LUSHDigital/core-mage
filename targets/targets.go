@@ -117,8 +117,8 @@ func Build(ctx context.Context) error {
 // Tests is the namespace for actions related to the test environment.
 type Tests mg.Namespace
 
-// All runs the project tests inside docker compose
-func (Tests) All(ctx context.Context) error {
+// Run runs the project tests inside docker compose
+func (Tests) Run(ctx context.Context) error {
 	arg := BuildDockerComposeArgs(ProjectName, ProjectType, "test", DockerComposeTestFile)
 	arg = append(arg, "up")
 	arg = append(arg,
@@ -235,7 +235,7 @@ func (Mod) Redis() error {
 
 // Test runs the project tests inside docker compose
 func Test(ctx context.Context) {
-	mg.CtxDeps(ctx, Tests.All)
+	mg.CtxDeps(ctx, Tests.Run)
 }
 
 // Install adds the dependencies into your vendor directory
