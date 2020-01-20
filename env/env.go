@@ -49,7 +49,7 @@ func TryLoadTest(paths ...string) {
 // This WILL OVERRIDE a variable that already exists and those set prior to this call will be replaced if set here.
 // For env variables set in multiple files passed to this function, the LAST one will prevail.
 func TryOverloadTest(paths ...string) {
-	overload(append(DevFiles, paths...)...)
+	overload(append(TestFiles, paths...)...)
 }
 
 func load(paths ...string) {
