@@ -3,27 +3,38 @@ The `env` package is used to load environment variables in the context of using 
 
 ## Example
 
-### Loading development environment config
+### Loading default environment
 
 ```go
-env.TryLoadDev()
+func main() {
+    env.LoadDefault()
+}
 ```
 
-### Loading development environment config together with other source
+### Loading specific environment files
 
 ```go
-env.TryLoadDev("package/other.env")
+func main() {
+    env.Load("infa/does-not-override.env")
+    env.Overload("infa/will-override.env")
+}
 ```
 
-
-### Loading test environment config
+### Loading default test configuration
 
 ```go
-env.TryLoadTest()
+func TestMain(m *testing.M) {
+	env.MustLoadDefaultTest(m)
+	os.Exit(m.Run())
+}
 ```
 
-### Loading test environment config together with other source
+### Loading specific files during the testing
 
 ```go
-env.TryLoadTest("package/other.env")
+func TestMain(m *testing.M) {
+    env.LoadTest(m, "infa/does-not-override.env")
+    env.OverloadTest(m, "infa/will-override.env")
+	os.Exit(m.Run())
+}
 ```
