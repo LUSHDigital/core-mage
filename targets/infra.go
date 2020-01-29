@@ -45,32 +45,32 @@ func writeProdChart() error {
 }
 
 func writeDotEnvFiles() error {
-	if err := MoveLegacyDotEnvFiles(); err != nil {
+	if err := moveLegacyDotEnvFiles(); err != nil {
 		return err
 	}
-	if err := WriteDotEnvCommon(); err != nil {
+	if err := writeDotEnvCommon(); err != nil {
 		return err
 	}
-	if err := WriteDotEnvPersonal(); err != nil {
+	if err := writeDotEnvPersonal(); err != nil {
 		return err
 	}
-	if err := WriteDotEnvLocalDev(); err != nil {
+	if err := writeDotEnvLocalDev(); err != nil {
 		return err
 	}
-	if err := WriteDotEnvLocalTest(); err != nil {
+	if err := writeDotEnvLocalTest(); err != nil {
 		return err
 	}
-	if err := WriteDotEnvComposeDev(); err != nil {
+	if err := writeDotEnvComposeDev(); err != nil {
 		return err
 	}
-	if err := WriteDotEnvComposeTest(); err != nil {
+	if err := writeDotEnvComposeTest(); err != nil {
 		return err
 	}
 	return nil
 }
 
-// MoveLegacyDotEnvFiles will take old dot env files and move them to their newer counterparts location
-func MoveLegacyDotEnvFiles() error {
+// moveLegacyDotEnvFiles will take old dot env files and move them to their newer counterparts location
+func moveLegacyDotEnvFiles() error {
 	mv := func(src, dst string) {
 		if err := sh.Copy(dst, src); err != nil {
 			return
@@ -88,8 +88,8 @@ func MoveLegacyDotEnvFiles() error {
 	return nil
 }
 
-// WriteDotEnvCommon will write the configuration file for the local development and test environment.
-func WriteDotEnvCommon() error {
+// writeDotEnvCommon will write the configuration file for the local development and test environment.
+func writeDotEnvCommon() error {
 	var vars = make(map[string]string)
 	return WriteEnvFile(
 		path.Join(InfraDir, "common.env"),
@@ -98,8 +98,8 @@ func WriteDotEnvCommon() error {
 	)
 }
 
-// WriteDotEnvPersonal will write the configuration file for the local development and test environment and within docker compose.
-func WriteDotEnvPersonal() error {
+// writeDotEnvPersonal will write the configuration file for the local development and test environment and within docker compose.
+func writeDotEnvPersonal() error {
 	var vars = make(map[string]string)
 	return WriteEnvFile(
 		path.Join(InfraDir, "personal.env"),
@@ -109,8 +109,8 @@ func WriteDotEnvPersonal() error {
 	)
 }
 
-// WriteDotEnvLocalDev will write the configuration file for the local development environment.
-func WriteDotEnvLocalDev() error {
+// writeDotEnvLocalDev will write the configuration file for the local development environment.
+func writeDotEnvLocalDev() error {
 	var vars = make(map[string]string)
 	for _, dep := range DockerComposeDevDependencies {
 		k, v := compose.Services.EnvFor(LocalHost, dep)
@@ -126,8 +126,8 @@ func WriteDotEnvLocalDev() error {
 	)
 }
 
-// WriteDotEnvLocalTest will write the configuration file for the local test environment.
-func WriteDotEnvLocalTest() error {
+// writeDotEnvLocalTest will write the configuration file for the local test environment.
+func writeDotEnvLocalTest() error {
 	var vars = make(map[string]string)
 	for _, dep := range DockerComposeTestDependencies {
 		k, v := compose.Services.EnvFor(LocalHost, dep)
@@ -143,8 +143,8 @@ func WriteDotEnvLocalTest() error {
 	)
 }
 
-// WriteDotEnvComposeDev will write the configuration file for the development environment within docker compose.
-func WriteDotEnvComposeDev() error {
+// writeDotEnvComposeDev will write the configuration file for the development environment within docker compose.
+func writeDotEnvComposeDev() error {
 	var vars = make(map[string]string)
 	for _, dep := range DockerComposeDevDependencies {
 		k, v := compose.Services.EnvFor(dep, dep)
@@ -160,8 +160,8 @@ func WriteDotEnvComposeDev() error {
 	)
 }
 
-// WriteDotEnvComposeTest will write the configuration file for the test environment within docker compose.
-func WriteDotEnvComposeTest() error {
+// writeDotEnvComposeTest will write the configuration file for the test environment within docker compose.
+func writeDotEnvComposeTest() error {
 	var vars = make(map[string]string)
 	for _, dep := range DockerComposeTestDependencies {
 		k, v := compose.Services.EnvFor(dep, dep)
