@@ -35,6 +35,6 @@ func TestMain(m *testing.M) {
 func TestMain(m *testing.M) {
     env.LoadTest(m, "infa/does-not-override.env")
     env.OverloadTest(m, "infa/will-override.env")
-	os.Exit(m.Run())
+    os.Exit(m.Run())
 }
 ```
