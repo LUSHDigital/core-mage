@@ -8,51 +8,60 @@ import (
 	"github.com/LUSHDigital/core/test"
 )
 
+func TestMain(m *testing.M) {
+	reset()
+	env.LoadTest(m, "env/testdata/test.load.env")
+	env.OverloadTest(m, "env/testdata/test.overload.env")
+	os.Exit(m.Run())
+}
+
+var m *testing.M
+
+func ExampleLoadTest() {
+	env.LoadTest(m, "infa/does-not-override.env")
+}
+
+func TestLoadTest(t *testing.T) {
+	test.Equals(t, "loaded", os.Getenv("TMP_TEST_THREE"))
+}
+
+func ExampleOverloadTest() {
+	env.OverloadTest(m, "infa/will-override.env")
+}
+
+func TestOverloadTest(t *testing.T) {
+	test.Equals(t, "overloaded", os.Getenv("TMP_TEST_ONE"))
+	test.Equals(t, "overloaded", os.Getenv("TMP_TEST_TWO"))
+}
+
+func ExampleLoad() {
+	env.Load("infa/does-not-override.env")
+}
+
+func TestLoad(t *testing.T) {
+	env.Load("testdata/local.load.env")
+	test.Equals(t, "default", os.Getenv("TMP_LOCAL_ONE"))
+	test.Equals(t, "default", os.Getenv("TMP_LOCAL_TWO"))
+	test.Equals(t, "loaded", os.Getenv("TMP_LOCAL_THREE"))
+}
+
+func ExampleOverload() {
+	env.Overload("infa/will-override.env")
+}
+
+func TestOverload(t *testing.T) {
+	env.Overload("testdata/local.overload.env")
+	test.Equals(t, "overloaded", os.Getenv("TMP_LOCAL_ONE"))
+	test.Equals(t, "default", os.Getenv("TMP_LOCAL_TWO"))
+	test.Equals(t, "loaded", os.Getenv("TMP_LOCAL_THREE"))
+}
+
 func reset() {
-	os.Setenv("TMPENV", "HELLO WORLD")
-	os.Unsetenv("TMPONE")
-}
+	os.Setenv("TMP_TEST_ONE", "default")
+	os.Setenv("TMP_TEST_TWO", "default")
+	os.Unsetenv("TMP_LOCAL_THREE")
 
-func ExampleTryLoadDev() {
-	env.TryLoadDev()
-}
-
-func TestTryLoadDev(t *testing.T) {
-	reset()
-	env.TryLoadDev("testdata/one.env", "testdata/two.env")
-	test.Equals(t, "HELLO WORLD", os.Getenv("TMPENV"))
-	test.Equals(t, "ONE", os.Getenv("TMPONE"))
-}
-
-func ExampleTryOverloadDev() {
-	env.TryOverloadDev()
-}
-
-func TestTryOverloadDev(t *testing.T) {
-	reset()
-	env.TryOverloadDev("testdata/one.env", "testdata/two.env")
-	test.Equals(t, "TWO", os.Getenv("TMPENV"))
-	test.Equals(t, "TWO", os.Getenv("TMPONE"))
-}
-
-func ExampleTryLoadTest() {
-	env.TryLoadTest()
-}
-
-func TestTryLoadTest(t *testing.T) {
-	reset()
-	env.TryLoadTest("testdata/one.env", "testdata/two.env")
-	test.Equals(t, "HELLO WORLD", os.Getenv("TMPENV"))
-	test.Equals(t, "ONE", os.Getenv("TMPONE"))
-}
-
-func ExampleTryOverloadTest() {
-	env.TryOverloadTest()
-}
-
-func TestTryOverloadTest(t *testing.T) {
-	reset()
-	env.TryOverloadTest("testdata/one.env", "testdata/two.env")
-	test.Equals(t, "TWO", os.Getenv("TMPENV"))
-	test.Equals(t, "TWO", os.Getenv("TMPONE"))
+	os.Setenv("TMP_LOCAL_ONE", "default")
+	os.Setenv("TMP_LOCAL_TWO", "default")
+	os.Unsetenv("TMP_TEST_THREE")
 }
