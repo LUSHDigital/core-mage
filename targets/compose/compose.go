@@ -60,6 +60,7 @@ var (
 		"redis":       RedisService,
 		"mongo":       MongoService,
 		"mongodb":     MongoService,
+		"minio":       MinioService,
 	}
 
 	// TestServices represents all available docker compose services for the testing environment.
@@ -73,6 +74,7 @@ var (
 		"redis":       RedisTestService,
 		"mongo":       MongoTestService,
 		"mongodb":     MongoTestService,
+		"minio":       MinioTestService,
 	}
 
 	// EnvVarNames represents all available env var names for the given service.
@@ -86,5 +88,6 @@ var (
 		"redis":       "REDIS_URL",
 		"mongo":       "MONGO_URL",
 		"mongodb":     "MONGO_URL",
+		"minio":       "MINIO_URL",
 	}
 )
