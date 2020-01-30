@@ -147,7 +147,7 @@ func writeDotEnvLocalTest() error {
 func writeDotEnvComposeDev() error {
 	var vars = make(map[string]string)
 	for _, dep := range DockerComposeDevDependencies {
-		k, v := compose.Services.EnvFor(dep, dep)
+		k, v := compose.Services.InternalEnvFor(dep, dep)
 		vars[k] = v
 	}
 	if DockerRunImage == DockerRunImageMigrations {
@@ -164,7 +164,7 @@ func writeDotEnvComposeDev() error {
 func writeDotEnvComposeTest() error {
 	var vars = make(map[string]string)
 	for _, dep := range DockerComposeTestDependencies {
-		k, v := compose.TestServices.EnvFor(dep, dep)
+		k, v := compose.TestServices.InternalEnvFor(dep, dep)
 		vars[k] = v
 	}
 	if DockerRunImage == DockerRunImageMigrations {

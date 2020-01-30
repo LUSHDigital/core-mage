@@ -26,7 +26,8 @@ var (
 			"MONGO_INITDB_ROOT_USERNAME": "user",
 			"MONGO_INITDB_ROOT_PASSWORD": "passwd",
 		},
-		urlPattern: "%s:27017",
+		ExternalURLPattern: "%s:27017",
+		InternalURLPattern: "%s:27017",
 	}
 
 	// MongoTestService represents a docker compose mongodb service.
@@ -41,6 +42,7 @@ var (
 			"27021:27018",
 			"27022:27019",
 		},
-		urlPattern: "%s:27020",
+		ExternalURLPattern: "%s:27020",
+		InternalURLPattern: "%s:27017",
 	}
 )

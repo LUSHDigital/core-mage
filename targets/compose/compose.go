@@ -35,16 +35,26 @@ type Service struct {
 
 	DependsOn []string `yaml:"depends_on,omitempty"`
 
-	urlPattern string
+	ExternalURLPattern string
+	InternalURLPattern string
 }
 
 // HostURL returns the fully qualified host url for the service
 func (s Service) HostURL(host string) string {
-	pattern := s.urlPattern
+	pattern := s.ExternalURLPattern
 	if pattern == "" {
 		pattern = "%s:0"
 	}
-	return fmt.Sprintf(s.urlPattern, host)
+	return fmt.Sprintf(s.ExternalURLPattern, host)
+}
+
+// InternalHostURL returns the fully qualified host url for the service
+func (s Service) InternalHostURL(host string) string {
+	pattern := s.InternalURLPattern
+	if pattern == "" {
+		pattern = "%s:0"
+	}
+	return fmt.Sprintf(s.InternalURLPattern, host)
 }
 
 // ServiceManifest represent a collection of services for given nicknames.
@@ -57,6 +67,15 @@ func (sm ServiceManifest) EnvFor(host string, service string) (key string, value
 		key = fmt.Sprintf(strings.ToUpper("%s_URL"), service)
 	}
 	return key, sm[service].HostURL(host)
+}
+
+// InternalEnvFor returns the environment key and value for a service on a given host.
+func (sm ServiceManifest) InternalEnvFor(host string, service string) (key string, value string) {
+	key, ok := EnvVarNames[service]
+	if !ok {
+		key = fmt.Sprintf(strings.ToUpper("%s_URL"), service)
+	}
+	return key, sm[service].InternalHostURL(host)
 }
 
 var (

@@ -16,7 +16,8 @@ var (
 		Volumes: []string{
 			"${PWD}/data/cockroach/dev1:/cockroach/cockroach-data",
 		},
-		urlPattern: "root@%s:26257/defaultdb?sslmode=disable",
+		ExternalURLPattern: "root@%s:26257/defaultdb?sslmode=disable",
+		InternalURLPattern: "root@%s:26257/defaultdb?sslmode=disable",
 	}
 
 	// CockroachTestService represents a docker compose cockroach db service.
@@ -31,6 +32,7 @@ var (
 			"26258:26257",
 			"8181:8080",
 		},
-		urlPattern: "root@%s:26258/defaultdb?sslmode=disable",
+		ExternalURLPattern: "root@%s:26258/defaultdb?sslmode=disable",
+		InternalURLPattern: "root@%s:26257/defaultdb?sslmode=disable",
 	}
 )

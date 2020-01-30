@@ -18,7 +18,8 @@ var (
 			"POSTGRES_USER":     "user",
 			"POSTGRES_PASSWORD": "passwd",
 		},
-		urlPattern: "%s:5432/service",
+		ExternalURLPattern: "%s:5432/service",
+		InternalURLPattern: "%s:5432/service",
 	}
 
 	// PostgresTestService represents a docker compose postgresql service.
@@ -35,6 +36,7 @@ var (
 			"POSTGRES_USER":     "user",
 			"POSTGRES_PASSWORD": "passwd",
 		},
-		urlPattern: "%s:5433/service",
+		ExternalURLPattern: "%s:5433/service",
+		InternalURLPattern: "%s:5432/service",
 	}
 )
