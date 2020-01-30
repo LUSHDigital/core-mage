@@ -1,6 +1,9 @@
 package compose
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 // File represents the file structure of a docker compose file.
 type File struct {
@@ -37,6 +40,10 @@ type Service struct {
 
 // HostURL returns the fully qualified host url for the service
 func (s Service) HostURL(host string) string {
+	pattern := s.urlPattern
+	if pattern == "" {
+		pattern = "%s:0"
+	}
 	return fmt.Sprintf(s.urlPattern, host)
 }
 
@@ -45,7 +52,11 @@ type ServiceManifest map[string]Service
 
 // EnvFor returns the environment key and value for a service on a given host.
 func (sm ServiceManifest) EnvFor(host string, service string) (key string, value string) {
-	return EnvVarNames[service], sm[service].HostURL(host)
+	key, ok := EnvVarNames[service]
+	if !ok {
+		key = fmt.Sprintf(strings.ToUpper("%s_URL"), service)
+	}
+	return key, sm[service].HostURL(host)
 }
 
 var (
