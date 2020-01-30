@@ -11,7 +11,11 @@ var (
 	// MageTargetsRepo is the repository used for importing mage targets.
 	MageTargetsRepo = "github.com/LUSHDigital/core-mage"
 
+	// InstallVolume is used to set what volume to use during the `mage install` target.
+	InstallVolume string = "${PWD}:/repo"
 
+	// InstallWorkDir is used to set what work directory to use during the `mage install` target.
+	InstallWorkDir string = "/repo"
 )
 
 // Setup performs setup of the project according to your magefile configuration.
@@ -202,16 +206,22 @@ func Test(ctx context.Context) {
 	mg.CtxDeps(ctx, Tests.Run)
 }
 
-// Install adds the dependencies into your vendor directory
+// Install installs the go module dependencies in the vendor directory
 func Install(ctx context.Context) error {
 	args := []string{
 		"run", "--rm",
-		"-e", fmt.Sprintf("GOPROXY=%s", Environment.GoProxy()),
-		"-v", "${PWD}:/repo",
-		"-v", fmt.Sprintf("%s:/go/pkg/mod", Environment.GoModPath()),
-		"-w", "/repo",
-		DockerBuildImage,
 	}
+	if proxy := Environment.GoProxy(); proxy != "" {
+		args = append(args, "-e", fmt.Sprintf("GOPROXY=%s", proxy))
+	}
+	if modpath := Environment.GoModPath(); modpath != "" {
+		args = append(args, "-v", fmt.Sprintf("%s:/go/pkg/mod", modpath))
+	}
+	args = append(args,
+		"-v", InstallVolume,
+		"-w", InstallWorkDir,
+		DockerBuildImage,
+	)
 	return Exec(DockerBin, append(args,
 		"go", "mod", "vendor",
 	)...)
