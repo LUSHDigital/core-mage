@@ -10,69 +10,25 @@ import (
 var (
 	// MageTargetsRepo is the repository used for importing mage targets.
 	MageTargetsRepo = "github.com/LUSHDigital/core-mage"
+
+
 )
 
-// Setup is the namespace for actions related to setting up the project.
-type Setup mg.Namespace
-
-// All performs all the build steps
-func (s Setup) All(ctx context.Context) {
-	mg.CtxDeps(ctx,
-		s.Docker,
-		s.Gitlab,
-		s.Infra,
-		s.Git,
-	)
-}
-
-// Infra installs the infrastructure dependencies
-func (Setup) Infra(ctx context.Context) error {
-	if err := writeInfraDir(); err != nil {
+// Setup performs setup of the project according to your magefile configuration.
+func Setup(ctx context.Context) error {
+	if err := setupDocker(); err != nil {
 		return err
 	}
-	if err := writeStageChart(); err != nil {
+	if err := setupGitlab(); err != nil {
 		return err
 	}
-	if err := writeProdChart(); err != nil {
+	if err := setupInfra(); err != nil {
 		return err
 	}
-	if err := writeDotEnvFiles(); err != nil {
+	if err := setupGit(); err != nil {
 		return err
 	}
 	return nil
-}
-
-// Docker installs the docker dependencies
-func (Setup) Docker(ctx context.Context) error {
-	if err := writeDockerfile(); err != nil {
-		return err
-	}
-	if err := writeDockerIgnorefile(); err != nil {
-		return err
-	}
-	if err := writeDockerDir(); err != nil {
-		return err
-	}
-	if err := writeDockerComposeDev(); err != nil {
-		return err
-	}
-	if err := writeDockerComposeTest(); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Git sets up git inside the project
-func (Setup) Git(ctx context.Context) error {
-	if err := initGit(); err != nil {
-		return err
-	}
-	return writeGitIgnoreFile()
-}
-
-// Gitlab sets up the gitlab pipeline
-func (Setup) Gitlab(ctx context.Context) error {
-	return writeGitlabCIFile()
 }
 
 // Dev is the namespace for actions related to the development environment.
