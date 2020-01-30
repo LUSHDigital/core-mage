@@ -126,7 +126,6 @@ func (Tests) Run(ctx context.Context) error {
 	arg := BuildDockerComposeArgs(ProjectName, ProjectType, "test", DockerComposeTestFile)
 	arg = append(arg, "run")
 	arg = append(arg,
-		"--service-ports",
 		"--rm",
 		"--use-aliases",
 	)
