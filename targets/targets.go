@@ -85,11 +85,8 @@ type Tests mg.Namespace
 // Run runs the project tests inside docker compose
 func (Tests) Run(ctx context.Context) error {
 	arg := BuildDockerComposeArgs(ProjectName, ProjectType, "test", DockerComposeTestFile)
-	arg = append(arg, "up")
-	arg = append(arg,
-		"--abort-on-container-exit",
-		"--exit-code-from=app",
-	)
+	arg = append(arg, "up", "-d")
+	arg = append(arg, DockerComposeTestDependencies...)
 	return Exec(ComposeBin, arg...)
 }
 
@@ -103,8 +100,12 @@ func (Tests) Reset(ctx context.Context) error {
 // Prepare initialises the test environment dependencies
 func (Tests) Prepare(ctx context.Context) error {
 	arg := BuildDockerComposeArgs(ProjectName, ProjectType, "test", DockerComposeTestFile)
-	arg = append(arg, "up", "-d")
-	arg = append(arg, DockerComposeTestDependencies...)
+	arg = append(arg, "run")
+	arg = append(arg,
+		"--service-ports",
+		"--use-aliases",
+	)
+	arg = append(arg, "app", "go", "test", "-mod=vendor", "-v", "-cover", "./...")
 	return Exec(ComposeBin, arg...)
 }
 
