@@ -74,6 +74,7 @@ func (Dev) Run(ctx context.Context) error {
 	arg := BuildDockerComposeArgs(ProjectName, ProjectType, "dev", DockerComposeDevFile)
 	arg = append(arg, "run")
 	arg = append(arg,
+		"--rm",
 		"--service-ports",
 		"--use-aliases",
 	)
@@ -126,6 +127,7 @@ func (Tests) Run(ctx context.Context) error {
 	arg = append(arg, "run")
 	arg = append(arg,
 		"--service-ports",
+		"--rm",
 		"--use-aliases",
 	)
 	arg = append(arg, "app", "go", "test", "-mod=vendor", "-v", "-cover", "./...")
