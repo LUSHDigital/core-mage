@@ -112,7 +112,7 @@ func (Tests) Prepare(ctx context.Context) error {
 // Protos is the namespace for actions related to generating protobuffers.
 type Protos mg.Namespace
 
-// Add the protos submodule to the repository
+// Add adds the protos submodule to the repository
 func (Protos) Add(ctx context.Context) error {
 	if err := addProtosSubmodule(); err != nil {
 		return err
@@ -120,7 +120,7 @@ func (Protos) Add(ctx context.Context) error {
 	return nil
 }
 
-// Remove the protos submodule from the repository
+// Remove removes the protos submodule from the repository
 func (Protos) Remove(ctx context.Context) error {
 	if err := removeProtosSubmodule(); err != nil {
 		return err
@@ -128,15 +128,16 @@ func (Protos) Remove(ctx context.Context) error {
 	return nil
 }
 
-// Update the protos submodule
+// Update updates the protos submodule in the repository
 func (Protos) Update(ctx context.Context) error {
 	if err := updateProtosSubmodule(); err != nil {
 		return err
 	}
+	mg.CtxDeps(ctx, Protos.Generate)
 	return nil
 }
 
-// Generate the protobuffers for this project
+// Generate generates codes from the protos submodule into the repository
 func (Protos) Generate(ctx context.Context) error {
 	if err := genProtos(); err != nil {
 		return err
