@@ -23,7 +23,6 @@ var (
 
 	// TestFiles represents the test files to be loaded in order.
 	TestFiles = []string{
-		"infra/personal.env",
 		"infra/local.test.env",
 		"infra/common.env",
 	}
