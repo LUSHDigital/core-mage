@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/LUSHDigital/core-mage/mod"
+	"github.com/LUSHDigital/core-mage/env/internal/mod"
 )
 
 func TestModulePath(t *testing.T) {
@@ -18,7 +18,8 @@ func TestModulePath(t *testing.T) {
 		t.Fatal(err)
 	}
 	trim := strings.TrimPrefix(wd, dir)
-	if trim != "/mod" {
-		t.Errorf("\nworkdir: %s\n  actual: %s", wd, dir)
+	if trim != "/env/internal/mod" {
+		t.Errorf("\nworkdir: %s\n actual: %s", wd, dir)
+		t.Errorf("\ntrimmed: %s", trim)
 	}
 }
