@@ -62,6 +62,13 @@ func (Dev) Restart(ctx context.Context) {
 	)
 }
 
+// Reset returns the development environment to its orginal state
+func (Dev) Reset(ctx context.Context) error {
+	arg := BuildDockerComposeArgs(ProjectName, ProjectType, "test", DockerComposeDevFile)
+	arg = append(arg, "down")
+	return Exec(ComposeBin, arg...)
+}
+
 // Run runs the service inside docker compose
 func (Dev) Run(ctx context.Context) error {
 	arg := BuildDockerComposeArgs(ProjectName, ProjectType, "dev", DockerComposeDevFile)
@@ -82,12 +89,28 @@ func Build(ctx context.Context) error {
 // Tests is the namespace for actions related to the test environment.
 type Tests mg.Namespace
 
-// Start starts the test environment
+// Start starts the test environment in docker compose
 func (Tests) Start(ctx context.Context) error {
 	arg := BuildDockerComposeArgs(ProjectName, ProjectType, "test", DockerComposeTestFile)
 	arg = append(arg, "up", "-d")
 	arg = append(arg, DockerComposeTestDependencies...)
 	return Exec(ComposeBin, arg...)
+}
+
+// Stop stops the test environment in docker compose
+func (Tests) Stop(ctx context.Context) error {
+	arg := BuildDockerComposeArgs(ProjectName, ProjectType, "test", DockerComposeTestFile)
+	arg = append(arg, "stop")
+	arg = append(arg, DockerComposeTestDependencies...)
+	return Exec(ComposeBin, arg...)
+}
+
+// Restart restarts the test environment in docker compose
+func (Tests) Restart(ctx context.Context) {
+	mg.SerialCtxDeps(ctx,
+		Tests.Stop,
+		Tests.Start,
+	)
 }
 
 // Reset returns the testing environment to its orginal state
