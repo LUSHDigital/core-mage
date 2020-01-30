@@ -38,7 +38,7 @@ func Setup(ctx context.Context) error {
 // Dev is the namespace for actions related to the development environment.
 type Dev mg.Namespace
 
-// Start starts the development environment
+// Start starts the development environment in docker compose
 func (Dev) Start(ctx context.Context) error {
 	arg := BuildDockerComposeArgs(ProjectName, ProjectType, "dev", DockerComposeDevFile)
 	arg = append(arg, "up", "-d")
@@ -46,7 +46,7 @@ func (Dev) Start(ctx context.Context) error {
 	return Exec(ComposeBin, arg...)
 }
 
-// Stop stops the development environment
+// Stop stops the development environment in docker compose
 func (Dev) Stop(ctx context.Context) error {
 	arg := BuildDockerComposeArgs(ProjectName, ProjectType, "dev", DockerComposeDevFile)
 	arg = append(arg, "stop")
@@ -54,7 +54,7 @@ func (Dev) Stop(ctx context.Context) error {
 	return Exec(ComposeBin, arg...)
 }
 
-// Restart will first stop then start the development environment
+// Restart restarts the development environment in docker compose
 func (Dev) Restart(ctx context.Context) {
 	mg.SerialCtxDeps(ctx,
 		Dev.Stop,
@@ -62,8 +62,8 @@ func (Dev) Restart(ctx context.Context) {
 	)
 }
 
-// Service starts the go service inside docker compose
-func (Dev) Service(ctx context.Context) error {
+// Run runs the service inside docker compose
+func (Dev) Run(ctx context.Context) error {
 	arg := BuildDockerComposeArgs(ProjectName, ProjectType, "dev", DockerComposeDevFile)
 	arg = append(arg, "run")
 	arg = append(arg,
