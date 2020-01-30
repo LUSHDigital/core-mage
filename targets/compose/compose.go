@@ -35,8 +35,8 @@ type Service struct {
 
 	DependsOn []string `yaml:"depends_on,omitempty"`
 
-	ExternalURLPattern string
-	InternalURLPattern string
+	ExternalURLPattern string `yaml:"-"`
+	InternalURLPattern string `yaml:"-"`
 }
 
 // HostURL returns the fully qualified host url for the service
