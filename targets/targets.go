@@ -82,8 +82,8 @@ func Build(ctx context.Context) error {
 // Tests is the namespace for actions related to the test environment.
 type Tests mg.Namespace
 
-// Run runs the project tests inside docker compose
-func (Tests) Run(ctx context.Context) error {
+// Start starts the test environment
+func (Tests) Start(ctx context.Context) error {
 	arg := BuildDockerComposeArgs(ProjectName, ProjectType, "test", DockerComposeTestFile)
 	arg = append(arg, "up", "-d")
 	arg = append(arg, DockerComposeTestDependencies...)
@@ -97,8 +97,8 @@ func (Tests) Reset(ctx context.Context) error {
 	return Exec(ComposeBin, arg...)
 }
 
-// Prepare initialises the test environment dependencies
-func (Tests) Prepare(ctx context.Context) error {
+// Run runs the project tests inside docker compose
+func (Tests) Run(ctx context.Context) error {
 	arg := BuildDockerComposeArgs(ProjectName, ProjectType, "test", DockerComposeTestFile)
 	arg = append(arg, "run")
 	arg = append(arg,
