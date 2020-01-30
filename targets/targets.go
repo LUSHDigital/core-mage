@@ -65,7 +65,12 @@ func (Dev) Restart(ctx context.Context) {
 // Service starts the go service inside docker compose
 func (Dev) Service(ctx context.Context) error {
 	arg := BuildDockerComposeArgs(ProjectName, ProjectType, "dev", DockerComposeDevFile)
-	arg = append(arg, "up", "app")
+	arg = append(arg, "run")
+	arg = append(arg,
+		"--service-ports",
+		"--use-aliases",
+	)
+	arg = append(arg, "app", "go", "run", "-mod=vendor", "./service")
 	return Exec(ComposeBin, arg...)
 }
 
