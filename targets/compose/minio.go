@@ -4,6 +4,7 @@ var (
 	// MinioService represents a docker compose minio service.
 	MinioService = Service{
 		Image:   "minio/minio",
+		Command: "server /data",
 		Restart: "always",
 		Logging: map[string]string{
 			"driver": "none",
@@ -24,6 +25,7 @@ var (
 	// MinioTestService represents a docker compose minio service for the testing environment.
 	MinioTestService = Service{
 		Image:   "minio/minio",
+		Command: "server /data",
 		Restart: "always",
 		Logging: map[string]string{
 			"driver": "none",
