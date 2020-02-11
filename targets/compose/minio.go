@@ -16,11 +16,11 @@ var (
 			"9000:9000",
 		},
 		Environment: map[string]string{
-			"MINIO_ACCESS_KEY": "user",
-			"MINIO_SECRET_KEY": "passwd",
+			"MINIO_ACCESS_KEY": "miniouser",
+			"MINIO_SECRET_KEY": "miniopasswd",
 		},
-		ExternalURLPattern: "user:passwd@%s:9000",
-		InternalURLPattern: "user:passwd@%s:9000",
+		ExternalURLPattern: "miniouser:miniopasswd@%s:9000",
+		InternalURLPattern: "miniouser:miniopasswd@%s:9000",
 	}
 	// MinioTestService represents a docker compose minio service for the testing environment.
 	MinioTestService = Service{
@@ -34,10 +34,10 @@ var (
 			"9001:9000",
 		},
 		Environment: map[string]string{
-			"MINIO_ACCESS_KEY": "user",
-			"MINIO_SECRET_KEY": "passwd",
+			"MINIO_ACCESS_KEY": "miniouser",
+			"MINIO_SECRET_KEY": "miniopasswd",
 		},
-		ExternalURLPattern: "user:passwd@%s:9001",
-		InternalURLPattern: "user:passwd@%s:9000",
+		ExternalURLPattern: "miniouser:miniopasswd@%s:9001",
+		InternalURLPattern: "miniouser:miniopasswd@%s:9000",
 	}
 )
