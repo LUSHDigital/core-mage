@@ -1,6 +1,6 @@
 module github.com/LUSHDigital/core-mage
 
-go 1.12
+go 1.14
 
 require (
 	github.com/LUSHDigital/core v0.22.0
