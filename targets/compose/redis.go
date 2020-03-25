@@ -14,8 +14,8 @@ var (
 		Ports: []string{
 			"6379:6379",
 		},
-		ExternalURLPattern: "%s:6379/0",
-		InternalURLPattern: "%s:6379/0",
+		ExternalURLPattern: "//%s:6379/0",
+		InternalURLPattern: "//%s:6379/0",
 	}
 
 	// RedisTestService represents a docker compose redis service.
@@ -28,7 +28,7 @@ var (
 		Ports: []string{
 			"6380:6379",
 		},
-		ExternalURLPattern: "%s:6380/0",
-		InternalURLPattern: "%s:6379/0",
+		ExternalURLPattern: "//%s:6380/0",
+		InternalURLPattern: "//%s:6379/0",
 	}
 )
