@@ -82,6 +82,10 @@ func genProtosFor(wd, namespace, name, output string) error {
 	if err := os.Chdir(wd); err != nil {
 		return err
 	}
+	protos := path.Join(output, "protos")
+	if err := os.RemoveAll(protos); err != nil {
+		return err
+	}
 	defer os.Chdir(Environment["PWD"])
 	_, err := sh.Exec(
 		Environment, os.Stdout, os.Stderr,
