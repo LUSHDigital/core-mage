@@ -57,7 +57,7 @@ func initSubmodule(name string) error {
 
 func updateSubmodule(name string) error {
 	path := submodulePath(name)
-	return Exec(GitBin, "submodule", "-q", "update", "-f", "--checkout", path)
+	return Exec(GitBin, "submodule", "-q", "update", "--remote", "-f", "--checkout", path)
 }
 
 func deinitSubmodule(name string) error {

@@ -14,8 +14,9 @@ func init() {
 	targets.DockerComposeTestDependencies = []string{"cockroach"}
 	targets.DockerRunImage = targets.DockerRunImageMigrations
 	targets.ProtoServices = []string{"products"}
+	targets.ProtoDefinitionsBranch = "master"
 
-	// Usede to account for the fact that we're importing a dependency from the parent package.
+	// Used to account for the fact that we're importing a dependency from the parent package.
 	targets.InstallVolume = "${PWD}/..:/repo"
 	targets.InstallWorkDir = "/repo/example"
 }
