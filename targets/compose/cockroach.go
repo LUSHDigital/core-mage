@@ -3,7 +3,7 @@ package compose
 var (
 	// CockroachService represents a docker compose cockroach db service.
 	CockroachService = Service{
-		Image:   "cockroachdb/cockroach:v19.1.4",
+		Image:   "cockroachdb/cockroach:v19.2.4",
 		Command: "start --insecure --listen-addr 0.0.0.0:26257",
 		Logging: map[string]string{
 			"driver": "none",
@@ -22,7 +22,7 @@ var (
 
 	// CockroachTestService represents a docker compose cockroach db service.
 	CockroachTestService = Service{
-		Image:   "cockroachdb/cockroach:v19.1.4",
+		Image:   "cockroachdb/cockroach:v19.2.4",
 		Command: "start --insecure --listen-addr 0.0.0.0:26257",
 		Logging: map[string]string{
 			"driver": "none",
