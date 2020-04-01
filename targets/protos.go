@@ -63,6 +63,10 @@ func genProtos() error {
 	}
 	output := path.Join(wd, ProtoOutputPath)
 	protogenwd := path.Join(wd, submodulePath(protosSubmoduleName))
+
+	if err := os.RemoveAll(path.Join(output, "protos")); err != nil {
+		return err
+	}
 	for _, name := range ProtoServices {
 		if err := genProtosFor(protogenwd, "service", name, output); err != nil {
 			return err
@@ -80,10 +84,6 @@ func genProtosFor(wd, namespace, name, output string) error {
 	src := wd
 	wd = path.Join(wd, "lush-protogen")
 	if err := os.Chdir(wd); err != nil {
-		return err
-	}
-	protos := path.Join(output, "protos")
-	if err := os.RemoveAll(protos); err != nil {
 		return err
 	}
 	defer os.Chdir(Environment["PWD"])
