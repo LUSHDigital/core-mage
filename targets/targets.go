@@ -129,8 +129,14 @@ func (Tests) Run(ctx context.Context) error {
 		"--rm",
 		"--use-aliases",
 	)
-	arg = append(arg, "app", "go", "test", "-mod=vendor", "-v", "-cover", "./...")
-	return Exec(ComposeBin, arg...)
+	arg = append(arg, "app", "go", "test", "-mod=vendor", "-v", "-cover")
+	if err := Exec(ComposeBin, append(arg, "./service")...); err != nil {
+		return err
+	}
+	if err := Exec(ComposeBin, append(arg, "./...")...); err != nil {
+		return err
+	}
+	return nil
 }
 
 // Protos is the namespace for actions related to generating protobuffers.
