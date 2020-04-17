@@ -91,6 +91,7 @@ var (
 		"mongo":       MongoService,
 		"mongodb":     MongoService,
 		"minio":       MinioService,
+		"rabbitmq":    RabbitMQService,
 	}
 
 	// TestServices represents all available docker compose services for the testing environment.
@@ -119,5 +120,6 @@ var (
 		"mongo":       "MONGO_URL",
 		"mongodb":     "MONGO_URL",
 		"minio":       "MINIO_URL",
+		"rabbitmq":    "RABBITMQ_URL",
 	}
 )
