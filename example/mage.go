@@ -10,7 +10,7 @@ import (
 func init() {
 	targets.ProjectName = "example"
 	targets.ProjectType = "service"
-	targets.DockerComposeDevDependencies = []string{"redis", "cockroach", "minio"}
+	targets.DockerComposeDevDependencies = []string{"redis", "cockroach", "minio", "rabbit"}
 	targets.DockerComposeTestDependencies = []string{"cockroach"}
 	targets.DockerRunImage = targets.DockerRunImageMigrations
 	targets.ProtoServices = []string{"products"}

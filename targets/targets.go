@@ -227,6 +227,14 @@ func (Mod) Cockroach() error {
 	return goget(libs...)
 }
 
+// Rabbit installs or upgrades the rabbit packages
+func (Mod) Rabbit() error {
+	libs := []string{
+		"github.com/streadway/amqp",
+	}
+	return goget(libs...)
+}
+
 // Redis installs or upgrades the redis packages
 func (Mod) Redis() error {
 	libs := []string{

@@ -81,43 +81,49 @@ func (sm ServiceManifest) InternalEnvFor(host string, service string) (key strin
 var (
 	// Services represents all available docker compose services for the development environment.
 	Services = ServiceManifest{
+		"cockroach":   CockroachService,
+		"cockroachdb": CockroachService,
+		"minio":       MinioService,
+		"mongo":       MongoService,
+		"mongodb":     MongoService,
+		"mysql":       MySQLService,
 		"pg":          PostgresService,
 		"postgres":    PostgresService,
 		"postgresql":  PostgresService,
-		"mysql":       MySQLService,
-		"cockroach":   CockroachService,
-		"cockroachdb": CockroachService,
+		"rabbit":      RabbitMQService,
+		"rabbitmq":    RabbitMQService,
 		"redis":       RedisService,
-		"mongo":       MongoService,
-		"mongodb":     MongoService,
-		"minio":       MinioService,
 	}
 
 	// TestServices represents all available docker compose services for the testing environment.
 	TestServices = ServiceManifest{
+		"cockroach":   CockroachTestService,
+		"cockroachdb": CockroachTestService,
+		"minio":       MinioTestService,
+		"mongo":       MongoTestService,
+		"mongodb":     MongoTestService,
+		"mysql":       MySQLTestService,
 		"pg":          PostgresTestService,
 		"postgres":    PostgresTestService,
 		"postgresql":  PostgresTestService,
-		"mysql":       MySQLTestService,
-		"cockroach":   CockroachTestService,
-		"cockroachdb": CockroachTestService,
+		"rabbit":      RabbitMQTestService,
+		"rabbitmq":    RabbitMQTestService,
 		"redis":       RedisTestService,
-		"mongo":       MongoTestService,
-		"mongodb":     MongoTestService,
-		"minio":       MinioTestService,
 	}
 
 	// EnvVarNames represents all available env var names for the given service.
 	EnvVarNames = map[string]string{
+		"cockroach":   "COCKROACH_URL",
+		"cockroachdb": "COCKROACH_URL",
+		"minio":       "MINIO_URL",
+		"mongo":       "MONGO_URL",
+		"mongodb":     "MONGO_URL",
+		"mysql":       "MYSQL_URL",
 		"pg":          "POSTGRES_URL",
 		"postgres":    "POSTGRES_URL",
 		"postgresql":  "POSTGRES_URL",
-		"mysql":       "MYSQL_URL",
-		"cockroach":   "COCKROACH_URL",
-		"cockroachdb": "COCKROACH_URL",
+		"rabbit":      "RABBITMQ_URL",
+		"rabbitmq":    "RABBITMQ_URL",
 		"redis":       "REDIS_URL",
-		"mongo":       "MONGO_URL",
-		"mongodb":     "MONGO_URL",
-		"minio":       "MINIO_URL",
 	}
 )
