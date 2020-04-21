@@ -227,8 +227,8 @@ func (Mod) Cockroach() error {
 	return goget(libs...)
 }
 
-// RabbitMQ installs or upgrades the rabbit packages
-func (Mod) RabbitMQ() error {
+// Rabbit installs or upgrades the rabbit packages
+func (Mod) Rabbit() error {
 	libs := []string{
 		"github.com/streadway/amqp",
 	}
