@@ -11,7 +11,7 @@ func init() {
 	targets.ProjectName = "example"
 	targets.ProjectType = "service"
 	targets.DockerComposeDevDependencies = []string{"redis", "cockroach", "minio", "rabbit"}
-	targets.DockerComposeTestDependencies = []string{"cockroach"}
+	targets.DockerComposeTestDependencies = []string{"rabbit", "cockroach"}
 	targets.DockerRunImage = targets.DockerRunImageMigrations
 	targets.ProtoServices = []string{"products"}
 	targets.ProtoDefinitionsBranch = "master"
