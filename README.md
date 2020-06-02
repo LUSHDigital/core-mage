@@ -69,14 +69,14 @@ func init() {
 ```
 
 ### Running tests on your local machine
-Sometimes you want to be able to run partial tests, add test flags or have your IDE run the tests for you. To achieve this you can start your test dependencies by running the `tests:prepare` target. This will keep them running in the background and expose their ports to the host machine.
+Sometimes you want to be able to run partial tests, add test flags or have your IDE run the tests for you. To achieve this you can start your test dependencies by running the `tests:start` target. This will keep them running in the background and expose their ports to the host machine.
 
 ```
-$ mage tests:prepare
+$ mage tests:start
 ```
 
 ### Resetting your test environment to its original state
-If your tests have gotten your database in a broken state and you don't know why, you can always reset the entire test environment using the `tests:reset` target to bring it down. Remember you need to run `tests:prepare` again if you want to run your tests on the host machine.
+If your tests have gotten your database in a broken state and you don't know why, you can always reset the entire test environment using the `tests:reset` target to bring it down. Remember you need to run `tests:start` again if you want to run your tests on the host machine.
 
 ```
 $ mage tests:reset
@@ -103,6 +103,48 @@ You can also run your service inside of docker compose and have it run in the fo
 ```bash
 $ mage dev:service
 ```
+
+### Protos
+Mage depends on two commandline utilities to generate the protobuffer files, `protobuf` and `protoc-gen-go`, so ensure these are installed and updated before generating protobuffer files. Protobuffer files from a git respository can be included in your project by first setting up your mage.go file to include them. 
+
+```go
+//+build mage
+
+package main
+
+import (
+	// mage:import
+	"github.com/LUSHDigital/core-mage/targets"
+)
+
+func init() {
+	targets.ProjectName = "products"
+	targets.ProjectType = "service"
+	targets.ProtoServices = []string{"products"}
+}
+```
+
+The first time you generate protobuffers to your project you need to run `mage protos:add` and every time you need to do an update, run `mage protos:update` which will pull the latest version of this repository and re-generate all protos into go code within your project.
+
+```
+mage protos:update
+lush-protogen generating go protos into "protos/service/products" package
+	- ./modules/protos/protos/service/products/classifications.proto
+	- ./modules/protos/protos/service/products/enums.proto
+	- ./modules/protos/protos/service/products/images.proto
+	- ./modules/protos/protos/service/products/indices.proto
+	- ./modules/protos/protos/service/products/ingredients.proto
+	- ./modules/protos/protos/service/products/items.proto
+	- ./modules/protos/protos/service/products/jurisdictions.proto
+	- ./modules/protos/protos/service/products/markets_service.proto
+	- ./modules/protos/protos/service/products/products.proto
+	- ./modules/protos/protos/service/products/products_service.proto
+	- ./modules/protos/protos/service/products/types.proto
+writing files to ./service/protos/service/products
+```
+
+Protobuffer files can also be generated directly by running `mage protos:generate`.
+
 
 ## Upgrading
 We've provided simple tooling for having mage be self-upgrading. Run the target and mage will take care of the rest.
