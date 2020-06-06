@@ -145,6 +145,27 @@ writing files to ./service/protos/service/products
 
 Protobuffer files can also be generated directly by running `mage protos:generate`.
 
+#### Branches
+By default the protobuffer files are generated for the master branch of your git repository. To target a different branch you need to define the `targets.ProtoDefinitionsBranch` in your mage.go file. Then update and generate your protobuffers as above.
+
+```go
+//+build mage
+
+package main
+
+import (
+	// mage:import
+	"github.com/LUSHDigital/core-mage/targets"
+)
+
+func init() {
+	targets.ProjectName = "products"
+	targets.ProjectType = "service"
+	targets.ProtoServices = []string{"products"}
+	targets.ProtoDefinitionsBranch = "feat/tag-groups"
+}
+```
+
 
 ## Upgrading
 We've provided simple tooling for having mage be self-upgrading. Run the target and mage will take care of the rest.
