@@ -93,6 +93,7 @@ var (
 		"rabbit":      RabbitMQService,
 		"rabbitmq":    RabbitMQService,
 		"redis":       RedisService,
+		"firebase":    FirebaseService,
 	}
 
 	// TestServices represents all available docker compose services for the testing environment.
@@ -109,6 +110,7 @@ var (
 		"rabbit":      RabbitMQTestService,
 		"rabbitmq":    RabbitMQTestService,
 		"redis":       RedisTestService,
+		"firebase":    FirebaseTestService,
 	}
 
 	// EnvVarNames represents all available env var names for the given service.
@@ -125,5 +127,6 @@ var (
 		"rabbit":      "RABBITMQ_URL",
 		"rabbitmq":    "RABBITMQ_URL",
 		"redis":       "REDIS_URL",
+		"firebase":    "FIREBASE_URL",
 	}
 )
