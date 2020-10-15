@@ -5,7 +5,7 @@ import (
 )
 
 var (
-	// ServiceDir represents the directory used for the service go files.
+	// ServiceDir represents the directory used for the service go files
 	ServiceDir = "service"
 )
 

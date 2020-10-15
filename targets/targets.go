@@ -35,6 +35,9 @@ func Setup(ctx context.Context) error {
 	if err := setupGit(); err != nil {
 		return err
 	}
+	if err := setupService(); err != nil {
+		return err
+	}
 	return nil
 }
 
