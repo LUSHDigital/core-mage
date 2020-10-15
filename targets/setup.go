@@ -54,3 +54,8 @@ func setupGit() error {
 func setupGitlab() error {
 	return writeGitlabCIFile()
 }
+
+// setupService sets up the service folder
+func setupService() error {
+	return writeServiceDir()
+}
