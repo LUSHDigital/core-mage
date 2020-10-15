@@ -20,6 +20,9 @@ var (
 
 // Setup performs setup of the project according to your magefile configuration.
 func Setup(ctx context.Context) error {
+	if err := setupReadme(); err != nil {
+		return err
+	}
 	if err := setupDocker(); err != nil {
 		return err
 	}
