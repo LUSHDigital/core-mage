@@ -1,5 +1,10 @@
 package targets
 
+// createReadme creates and initial README file with instructions on how to use Mage
+func setupReadme() error {
+	return createReadme()
+}
+
 // setupInfra installs the infrastructure dependencies
 func setupInfra() error {
 	if err := writeInfraDir(); err != nil {
